@@ -80,7 +80,7 @@ public class SetupBattleGround extends HttpServlet {
 			while(resultSet.next()){
 				String robocode =resultSet.getString("RobotCode");
 				String robotid = resultSet.getString("RobotId");
-				CompileSourceInMemory.CompileSource(robotid, robocode, getServletContext().getRealPath("/") + "robocode.jar");
+				CompileSourceInMemory.CompileSource(robotid, robocode, getServletContext().getRealPath("/") + "roboclasses/");
 				
 			}
 			
