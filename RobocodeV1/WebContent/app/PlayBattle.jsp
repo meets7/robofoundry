@@ -101,7 +101,7 @@ function getValueFromApplet(){
 	         data: "RobotId="+csvlist,
 	         async : false,
 	         success : function(res) {
-	     		window.location = "PlayBattle2.jsp";
+	     		window.location = "../PlayBattle2.jsp";
 	         }
 	     });  
  		event.preventDefault();
