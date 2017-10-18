@@ -211,7 +211,7 @@ public class LoginServlet extends HttpServlet {
 				Class.forName("com.mysql.jdbc.Driver");
 				Connection conn = (Connection) DriverManager.getConnection(
 						"jdbc:mysql://robocodedb.cloudapp.net:3306/Role",
-						"naren", "naren");
+						"root", "root");
 				String sqle = "SELECT * FROM Pages where HierarchicalRoleID in ";
 				String sqll = "SELECT HierarchicalRoleId from UserHierarchicalRole Where UserId = '"
 						+ session.getAttribute("userName") + "'";
@@ -340,7 +340,7 @@ public class LoginServlet extends HttpServlet {
 					Class.forName("com.mysql.jdbc.Driver");
 					Connection conn = (Connection) DriverManager.getConnection(
 							"jdbc:mysql://robocodedb.cloudapp.net:3306/Role",
-							"naren", "naren");
+							"root", "root");
 					String sqle = "SELECT * FROM Pages where HierarchicalRoleID in ";
 					String sqll = "SELECT HierarchicalRoleId from UserHierarchicalRole Where UserId = '"
 							+ user_DTO.get(0).getUserName() + "'";

@@ -88,7 +88,7 @@ public class PackageEdit2 extends HttpServlet{
 		for (int i = 0; i < permission2.length; i++) {
 			try {
 				Connection connection = DriverManager
-						.getConnection("jdbc:mysql://robocodedb.cloudapp.net:3306/Role?user=naren&password=naren");
+						.getConnection("jdbc:mysql://robocodedb.cloudapp.net:3306/Role?user=root&password=root");
 
 				Statement statement = (Statement) connection.createStatement();
 				String newstmt = "Delete from Package_Role_Permission where PackagePermissionID='"

@@ -35,7 +35,7 @@ import Service.UpdateRobotRestClientService;
  * Servlet implementation class UpdateRobotServlet
  */
 
-@WebServlet("/updaterobot")
+//@WebServlet("/updaterobot")
 public class UpdateRobotServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	Connection connection = null;
