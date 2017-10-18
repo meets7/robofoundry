@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.sql.Array;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -30,8 +31,7 @@ import DTO.RobotDTO;
 import DTO.UserDTO;
 import Service.UpdateRobotRestClientService;
 
-
-@WebServlet("/setupbattleground")
+//@WebServlet("/setupbattleground")
 public class SetupBattleGround extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	Connection connection = null;
@@ -63,34 +63,40 @@ public class SetupBattleGround extends HttpServlet {
 		String user = "root";
 		String password = "root";
 
-		RobotDTO robotDTO = null;
-		if (request.getParameter("RobotCode") != null) {
-		robotDTO = (RobotDTO) session.getAttribute("RobObj");
-		robotDTO.setUpdatedDate(String.valueOf(new Date()));
-		request.setAttribute("User",robotDTO.getUserId());
-
-		UpdateRobotRestClientService updateRobot = new UpdateRobotRestClientService();
-		String message = updateRobot.updateRobot(robotDTO);
-
-		System.out.println("updated message:"+message);
-		request.setAttribute("message", message);
-		request.setAttribute("date", robotDTO.getUpdatedDate());
+//		RobotDTO robotDTO = null;
+//		if (request.getParameter("RobotId") != null) {
+//		request.setAttribute("User",robotDTO.getUserId());
+//
+//		UpdateRobotRestClientService updateRobot = new UpdateRobotRestClientService();
+//		String message = updateRobot.updateRobot(robotDTO);
+//
+//		System.out.println("updated message:"+message);
+//		request.setAttribute("message", message);
+//		request.setAttribute("date", robotDTO.getUpdatedDate());
 		try {
 			Connection conn = DriverManager.getConnection(url, user, password);
 			
-			String robotIds = request.getParameter("csvlist");
-			robotIds = robotIds.replaceAll(", $", "");
+			String robotIds = request.getParameter("RobotId");
 			
-			String sql = "SELECT RobotID, RobotCode from robot where robotId in (" + robotIds +")";
-			Statement statement = (Statement) conn.createStatement();
-			resultSet = statement.executeQuery(sql);
+			
+			Object[] robots = robotIds.split(",");
+
+			robotIds = "";
+			for(int i=0;i<robots.length;i++)
+				robotIds = robotIds + "'" + robots[i] + "',";
+			robotIds = robotIds.substring(0, robotIds.length()-1);
+			
+//			PreparedStatement stmt = conn.prepareStatement("select RobotID, RobotCode from robot where robotId in ( ? )");
+			String sql = "select RobotID, RobotCode from robot where robotId in ( %s )";
+			sql = String.format(sql, robotIds);
+//			stmt.setArray(1, array);
+			Statement stmt = (Statement) conn.createStatement();
+			resultSet = stmt.executeQuery(sql);
 			
 			while(resultSet.next()){
 				String robocode =resultSet.getString("RobotCode");
 				String robotid = resultSet.getString("RobotId");
-				PrintWriter writer = new PrintWriter(robotid + ".java");
-				writer.write(robocode);
-				writer.close();
+				CompileSourceInMemory.CompileSource(robotid, robocode, getServletContext().getRealPath("/") + "robocode.jar");
 				
 			}
 			
@@ -104,5 +110,5 @@ public class SetupBattleGround extends HttpServlet {
 		RequestDispatcher rd=request.getRequestDispatcher("Edit_Robot2.jsp");    
 		rd.forward(request, response);
 	}
-	}
 }
+

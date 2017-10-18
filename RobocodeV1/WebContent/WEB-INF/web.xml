@@ -456,6 +456,14 @@
         <param-value>/(images|css|jsp)/.*</param-value>
     </init-param>
 </servlet>
+ <servlet>
+  <servlet-name>SetupBattleGround</servlet-name>
+  <servlet-class> servlets.SetupBattleGround</servlet-class>
+</servlet> 
+ <servlet-mapping>
+  <servlet-name>SetupBattleGround</servlet-name>
+  <url-pattern>/setupbattleground</url-pattern>
+</servlet-mapping> 
 
 
 

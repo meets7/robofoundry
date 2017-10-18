@@ -95,7 +95,17 @@ function getValueFromApplet(){
 		$('#selectrobots option').each(function(){
 			csvlist = csvlist + this.label + ','
 		});
-		window.location = "PlayBattle2.jsp";
+	     $.ajax({
+	         url: 'setupbattleground',
+	         type: 'POST',
+	         data: "RobotId="+csvlist,
+	         async : false,
+	         success : function(res) {
+	     		window.location = "PlayBattle2.jsp";
+	         }
+	     });  
+ 		event.preventDefault();
+
  	}
 	function selectAll(){
 		//document.getElementById("all").selected=true;

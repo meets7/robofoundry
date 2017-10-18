@@ -50,10 +50,9 @@ public class CompileRobocode {
 	public static BufferedReader compileRobocode(RobotDTO robotDTO, String domainPath)
 			throws IOException {
 		BufferedReader br = null;
-		System.out.println("Vandhudu: " + domainPath);
 		String jarPath = domainPath + "\\robocode.jar";
 		String classPath = "javac -classpath " + jarPath;
-		System.out.println("Vandhuduchu: " + classPath);
+
 		boolean compileFlag = false;
 		// boolean domainFlag = false;
 		String robotPackage = robotDTO.getPackageId();
