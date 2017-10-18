@@ -23,9 +23,11 @@
     <h2>This applet has been deployed with the applet tag <em>without</em> using JNLP</h2>
     <applet alt = "Dynamic Tree Applet Demo" 
         code = 'robocode.Robocode'
-        archive = "applet7.jar"
+        archive = "applet7.jar",
         width = 800,
         height = 600 >
-        </applet><!--   codebase = "." -->
+        <param name=robots value="sample.Corners,sample.Fire">
+    </applet>
+       <!--   codebase = "." -->
   </body>
 </html>

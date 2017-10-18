@@ -1,35 +1,16 @@
 package servlets;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.io.Writer;
-import java.sql.Array;
-import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.Date;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.mysql.jdbc.Statement;
-
-import DTO.RobotDTO;
-import DTO.UserDTO;
-import Service.UpdateRobotRestClientService;
 
 //@WebServlet("/setupbattleground")
 public class SetupBattleGround extends HttpServlet {
@@ -76,14 +57,17 @@ public class SetupBattleGround extends HttpServlet {
 		try {
 			Connection conn = DriverManager.getConnection(url, user, password);
 			
-			String robotIds = request.getParameter("RobotId");
-			
-			
+			String robotIds = request.getParameter("RobotId");			
 			Object[] robots = robotIds.split(",");
 
 			robotIds = "";
-			for(int i=0;i<robots.length;i++)
+			String sessionAttributeValue = ""; 
+			for(int i=0;i<robots.length;i++){
 				robotIds = robotIds + "'" + robots[i] + "',";
+				sessionAttributeValue += "sample." + robots[i] + ",";
+			} 
+			sessionAttributeValue = sessionAttributeValue.substring(0, sessionAttributeValue.length()-1);
+			session.setAttribute("robots", sessionAttributeValue);
 			robotIds = robotIds.substring(0, robotIds.length()-1);
 			
 //			PreparedStatement stmt = conn.prepareStatement("select RobotID, RobotCode from robot where robotId in ( ? )");
@@ -107,8 +91,8 @@ public class SetupBattleGround extends HttpServlet {
 		}
 
 		
-		RequestDispatcher rd=request.getRequestDispatcher("Edit_Robot2.jsp");    
-		rd.forward(request, response);
+//		RequestDispatcher rd=request.getRequestDispatcher("Edit_Robot2.jsp");    
+//		rd.forward(request, response);
 	}
 }
 
