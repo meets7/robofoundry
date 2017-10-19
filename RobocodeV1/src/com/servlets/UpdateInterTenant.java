@@ -55,7 +55,7 @@ public class UpdateInterTenant extends HttpServlet{
 						String role_values[] = ToTenantPermission.get(j).split("_");					
 						try{
 							Connection connection = DriverManager
-									.getConnection("jdbc:mysql://robocodedb.cloudapp.net:3306/Role?user=naren&password=naren");
+									.getConnection("jdbc:mysql://robocodedb.cloudapp.net:3306/Role?user=root&password=root");
 							Statement statement = connection.createStatement();
 							System.out.println("INSERT INTO  Role.Inter_Tenant_Mapping (FromTenantID ,FromPackagePermissionID ,ToTenantID ,ToPackagePermissionID)VALUES (" + "'" + FromTenantID.get(0) + "'" +  "," +  "'" + FromPackagePermissionID.get(0) + "'" + "," + "'" + role_values[0] + "'" + "," + "'" + role_values[1] + "'" + ")");
 							int rs = statement
@@ -89,7 +89,7 @@ public class UpdateInterTenant extends HttpServlet{
 			//String[] values = tenantName.split("_");
 			/*try {
 				//Connection connection = DriverManager
-					//	.getConnection("jdbc:mysql://robocodedb.cloudapp.net:3306/Role?user=naren&password=naren");
+					//	.getConnection("jdbc:mysql://robocodedb.cloudapp.net:3306/Role?user=root&password=root");
 
 				//Statement statement = connection.createStatement();
 				//System.out.println("INSERT into Inter_Tenant_Mapping values()UPDATE robot SET Robot_Ranking = " + each_robot_info[1] +  " WHERE robot.Package_Id = '"	+ robot_domain_info[0] + "' AND robot.Robot_Name = '"	+ robot_domain_info[1] + "'");

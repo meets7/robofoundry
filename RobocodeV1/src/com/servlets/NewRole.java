@@ -46,7 +46,7 @@ public class NewRole extends HttpServlet {
 
 			try {
 				Connection connection = DriverManager
-						.getConnection("jdbc:mysql://robocodedb.cloudapp.net:3306/Role?user=naren&password=naren");
+						.getConnection("jdbc:mysql://robocodedb.cloudapp.net:3306/Role?user=root&password=root");
 				
 				Statement statement = (Statement) connection.createStatement();
 				String newstmt = "INSERT INTO Package_Role_Permission(PackageRoleId, PackagePermissionID) VALUES ('"

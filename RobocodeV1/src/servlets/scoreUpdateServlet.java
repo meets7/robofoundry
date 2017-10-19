@@ -32,7 +32,7 @@ public class scoreUpdateServlet extends HttpServlet{
 		    System.out.println("The robot domain info is" + Arrays.toString(robot_domain_info));
 			try {
 				Connection connection = DriverManager
-						.getConnection("jdbc:mysql://robocodedb.cloudapp.net:3306/form?user=naren&password=naren");
+						.getConnection("jdbc:mysql://robocodedb.cloudapp.net:3306/form?user=root&password=root");
 
 				Statement statement = connection.createStatement();
 				System.out.println("UPDATE robot SET Robot_Ranking = " + each_robot_info[1] +  " WHERE robot.Package_Id = '"	+ robot_domain_info[0] + "' AND robot.Robot_Name = '"	+ robot_domain_info[1] + "'");
@@ -111,7 +111,7 @@ public class scoreUpdateServlet extends HttpServlet{
 		System.out.println("the final query is" + final_query);
 		try{
 			Connection connection = DriverManager
-					.getConnection("jdbc:mysql://robocodedb.cloudapp.net:3306/form?user=naren&password=naren");
+					.getConnection("jdbc:mysql://robocodedb.cloudapp.net:3306/form?user=root&password=root");
 
 			Statement statement = connection.createStatement();
 				System.out.println(final_query);
@@ -172,7 +172,7 @@ public class scoreUpdateServlet extends HttpServlet{
 		    System.out.println("The robot domain info is" + Arrays.toString(robot_domain_info));
 			try {
 				Connection connection = DriverManager
-						.getConnection("jdbc:mysql://robocodedb.cloudapp.net:3306/form?user=naren&password=naren");
+						.getConnection("jdbc:mysql://robocodedb.cloudapp.net:3306/form?user=root&password=root");
 
 				Statement statement = connection.createStatement();
 				System.out.println("UPDATE robot SET Robot_Ranking = " + final_value.get(robot_domain_info[1]) +  " WHERE robot.Package_Id = '"	+ robot_domain_info[0] + "' AND robot.Robot_Name = '"	+ robot_domain_info[1] + "'");
@@ -183,7 +183,7 @@ public class scoreUpdateServlet extends HttpServlet{
 		}
 		try {
 			Connection connection = DriverManager
-					.getConnection("jdbc:mysql://robocodedb.cloudapp.net:3306/form?user=naren&password=naren");
+					.getConnection("jdbc:mysql://robocodedb.cloudapp.net:3306/form?user=root&password=root");
 
 			Statement statement = connection.createStatement();
 				ResultSet rs = statement.executeQuery("SELECT robot.Package_Id, robot.Robot_Name, robot.Robot_Ranking FROM robot");

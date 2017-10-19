@@ -16,8 +16,8 @@ public class testing {
 	   static final String DB_URL = "jdbc:mysql://robocodedb.cloudapp.net:3306/form";
 
 	   //  Database credentials
-	   static final String USER = "naren";
-	   static final String PASS = "naren";
+	   static final String USER = "root";
+	   static final String PASS = "root";
 	   static Connection conn = null;
 	   static Statement stmt = null;
 	/**

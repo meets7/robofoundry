@@ -24,8 +24,8 @@ public class GetDomainRobotListDAO {
 	   final String DB_URL = "jdbc:mysql://robocodedb.cloudapp.net:3306/form";
 
 	   //  Database credentials
-	   final String USER = "naren";
-	   final String PASS = "naren";
+	   final String USER = "root";
+	   final String PASS = "root";
 	   Connection conn = null;
 	   Statement stmt = null;
 	   

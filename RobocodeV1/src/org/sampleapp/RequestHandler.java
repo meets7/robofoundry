@@ -479,7 +479,7 @@ public class RequestHandler extends HttpServlet {
 					 * send a success message to the user.
 					 */
 					String result = null;
-					Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://robocodedb.cloudapp.net:3306/form","naren","naren");
+					Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://robocodedb.cloudapp.net:3306/form","root","root");
 					String sqltocheck = "SELECT count(*) as countUsers FROM Users where userid = '" + uid + "'";
 					PreparedStatement ppl = (PreparedStatement) c.prepareStatement(sqltocheck);
 				    ResultSet rl = (ResultSet) ppl.executeQuery();
@@ -508,7 +508,7 @@ public class RequestHandler extends HttpServlet {
 					}
 					else
 					{
-						Connection conn = (Connection) DriverManager.getConnection("jdbc:mysql://robocodedb.cloudapp.net:3306/Role","naren","naren");
+						Connection conn = (Connection) DriverManager.getConnection("jdbc:mysql://robocodedb.cloudapp.net:3306/Role","root","root");
 						String sql = "INSERT INTO Users VALUES ('" + uid + "','" +  tenant + "','" + uname + "')";
 						System.out.println(sql);
 						Statement stmt = (Statement) conn.createStatement();
