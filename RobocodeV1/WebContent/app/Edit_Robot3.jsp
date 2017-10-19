@@ -38,7 +38,7 @@
 	<br>
 	<br>
 	<br>
-	<h1>View Robot</h1>
+	<h1>Edit Robot</h1>
 	<br>
 	<div class="dropdown">
 
