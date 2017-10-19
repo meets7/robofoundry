@@ -21,6 +21,8 @@ public class CompileSourceInMemory {
     Iterable<? extends JavaFileObject> compilationUnits = Arrays.asList(file);
     List<String> options=new ArrayList<String>();    // add -cp classpath option, etc here
 	options.addAll(Arrays.asList("-classpath", classpath));
+	System.out.println(classpath);
+	options.addAll(Arrays.asList("-d", classpath));
     CompilationTask task = compiler.getTask(null, null, null, options, null, compilationUnits);
 	boolean success = task.call();
     return success;

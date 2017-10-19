@@ -22,13 +22,14 @@
     <script src ="http://www.java.com/js/deployJava.js"></script>
     <%
     	String robots = (String)session.getAttribute("robots");
+    	String classpath = (String)session.getAttribute("classpath");
     %>
     <noscript>A browser with JavaScript enabled is required for this page to operate properly.</noscript>
     <h1>Dynamic Tree Applet Demo</h1>
     <h2>This applet has been deployed with the applet tag <em>without</em> using JNLP</h2>
     <applet alt = "Dynamic Tree Applet Demo" 
-        code = 'robocode.Robocode'
-        archive = "something.jar"
+        code = "robocode.Robocode"
+        archive = "myrobocode.jar"
         width = 800,
         height = 600 >
         <param name="robots" value="${robots}">

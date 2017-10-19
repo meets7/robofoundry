@@ -1,4 +1,5 @@
 package servlets;
+import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.mysql.jdbc.Statement;
+
+import edu.utdallas.CreateJarFile;
 
 //@WebServlet("/setupbattleground")
 public class SetupBattleGround extends HttpServlet {
@@ -81,8 +84,11 @@ public class SetupBattleGround extends HttpServlet {
 				String robocode =resultSet.getString("RobotCode");
 				String robotid = resultSet.getString("RobotId");
 				CompileSourceInMemory.CompileSource(robotid, robocode, getServletContext().getRealPath("/") + "roboclasses/");
-				
 			}
+			
+			String roboclassespath = getServletContext().getRealPath("/");
+			session.setAttribute("classpath", roboclassespath + "roboclasses.robocode.robocode");
+			CreateJarFile.createJar(roboclassespath + "roboclasses/", roboclassespath + "myrobocode.jar");
 			
 			conn.close();
 		}
