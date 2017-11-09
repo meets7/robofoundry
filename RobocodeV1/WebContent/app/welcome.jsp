@@ -87,7 +87,7 @@
 	<div class="footer-below">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-12">Copyright &copy; 2016</div>
+				<div class="col-lg-12">Copyright &copy; 2017</div>
 			</div>
 		</div>
 	</div>
