@@ -1,12 +1,10 @@
+import json
+import os
+
+import requests
 from flask import Flask, render_template, session, request, url_for, \
     redirect, json
-import requests
-import json
 from requests_oauthlib import OAuth2Session
-from flask.json import jsonify
-import os
-import requests
-import jwt
 
 app = Flask(__name__)
 client_id = "triallogin"
@@ -40,6 +38,7 @@ def login():
     session['oauth_state'] = state
     return redirect(authorization_url)
 
+
 @app.route("/callback", methods=["GET"])
 def callback():
     """ Step 3: Retrieving an access token.
@@ -51,8 +50,8 @@ def callback():
 
     cloudfoundry = OAuth2Session(client_id, state=session['oauth_state'])
     token = cloudfoundry.fetch_token(token_url, client_secret=client_secret,
-                               authorization_response=request.url, 
-                               verify=False)
+                                     authorization_response=request.url,
+                                     verify=False)
 
     # At this point you can fetch protected resources but lets save
     # the token and show how this is done from a persisted token
@@ -71,16 +70,16 @@ def profile():
         return redirect(url_for('login'))
     tokenString = "bearer {0}".format(session['oauth_token']['access_token'])
     headers = {"Authorization": tokenString}
-    profileInfo = {'access_token':session['oauth_token']['access_token']}
+    profileInfo = {'access_token': session['oauth_token']['access_token']}
 
-    #get user summary
+    # get user summary
     userinfourl = 'https://uaa.local.pcfdev.io/userinfo'
     userinfo = json.loads(requests.get(
         userinfourl, headers=headers, verify=False).text)
     session['userinfo'] = userinfo
     profileInfo['userinfo'] = json.dumps(session['userinfo'])
 
-    #get user roles by orgs and space
+    # get user roles by orgs and space
     usersummaryurl = 'https://api.local.pcfdev.io/v2/users/{' \
                      '}/summary'.format(userinfo['user_id'])
     usersummary = json.loads(requests.get(
@@ -111,18 +110,18 @@ def getSpaceWiseUserRoles(entity):
 
     for subentity in entity['spaces']:
         spaceWiseUserRoles[subentity['metadata']['guid']] = {
-            'role':'developer',
-            'name':subentity['entity']['name']
+            'role': 'developer',
+            'name': subentity['entity']['name']
         }
     for subentity in entity['managed_spaces']:
         spaceWiseUserRoles[subentity['metadata']['guid']] = {
-            'role':'manager',
-            'name':subentity['entity']['name']
+            'role': 'manager',
+            'name': subentity['entity']['name']
         }
     for subentity in entity['audited_spaces']:
         spaceWiseUserRoles[subentity['metadata']['guid']] = {
-            'role':'auditor',
-            'name':subentity['entity']['name']
+            'role': 'auditor',
+            'name': subentity['entity']['name']
         }
 
     return spaceWiseUserRoles
@@ -138,4 +137,4 @@ if __name__ == '__main__':
     os.environ['DEBUG'] = "1"
     os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
     app.secret_key = os.urandom(24)
-    app.run(debug=True, use_reloader=True,ssl_context='adhoc')
+    app.run(debug=True, use_reloader=True, ssl_context='adhoc')
