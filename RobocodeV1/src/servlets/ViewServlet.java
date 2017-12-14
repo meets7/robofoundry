@@ -36,17 +36,16 @@ public class ViewServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		
 		HttpSession session = request.getSession();
 		String userDTO = session.getAttribute("userx").toString();
 		RobotDTO robotDTO  = new RobotDTO();
 		String selectedItem = null;
 		GetRobotRestClientService getRobotListService = new GetRobotRestClientService();
+		
 		if (request.getParameter("domain_name") != null) {
 			selectedItem = request.getParameter("domain_name");
 		}
-		
 		robotDTO.setPackageId(selectedItem);
 		  
 		

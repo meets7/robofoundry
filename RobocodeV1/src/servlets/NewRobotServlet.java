@@ -93,8 +93,6 @@ public class NewRobotServlet extends HttpServlet {
 		String packageName = String.valueOf(request.getAttribute("package"));
 		System.out.println("roboName:"+robotName+" with package:"+packageName);
 		String message = null;
-		
-		
 		RobotDTO robotDTO = new RobotDTO();
 		
 		session.setAttribute("tenant_name", user);
@@ -102,11 +100,6 @@ public class NewRobotServlet extends HttpServlet {
 		robotAccessDTO.setUserId("User");
 		robotAccessDTO.setRobotName(name);
 		robotAccessDTO.setPackageId(robotPackage);
-
-
-		//List<String> robotList = RobotDAO.getRobotList(robotAccessDTO);
-
-		
 		robotDTO.setRobotName(robotName);
 		robotDTO.setPackageId(packageName);
 		//robotDTO.setRobotDescription(robotDTO.getRobotName()+".java");
@@ -174,17 +167,18 @@ public class NewRobotServlet extends HttpServlet {
 		System.out.println(robotDTO.getCreatedDate());
 		try {
 			Connection conn = DriverManager.getConnection(url, username, password);
-			String sql = "INSERT INTO robot (CreatedDate,RobotCode,packageID,robotID,userID,filepath,dataaccess) VALUES(?, ?, ?, ?, ?, ?, ?) ";
+			String sql = "INSERT INTO robot (CreatedDate,RobotCode,packageID,robotID,userID,filepath,dataaccess,org) VALUES(?, ?, ?, ?, ?, ?, ?,?) ";
 			PreparedStatement statement = conn.prepareStatement(sql);
 			statement.setString(1, robotDTO.getCreatedDate());
 			statement.setString(4, robotName);
 			statement.setString(3, packageName);
 			statement.setString(5, user);
 			statement.setString(2, robotCode);
-			statement.setString(7, "Y");
+			statement.setString(7, "N");
 			statement.setString(6, "/Users/neethuantony/git/CCRoboGroupD/RobocodeV1/robocode/robots/"+packageName+"/"+robotName+".java");
+			statement.setString(8, "org1");
+			System.out.println(sql);
 			int count = statement.executeUpdate();
-			//File file = new File("C://robocode//robots//robocode//robots//"+packageName+"//"+robotName+".java");
 			try (Writer writer = new BufferedWriter(new OutputStreamWriter(
 					new FileOutputStream("//Users//neethuantony//git//CCRoboGroupD//RobocodeV1//robocode//robots//"+packageName+"//"+robotName+".java"), "utf-8"))) {
 				writer.write(robotCode);
@@ -200,37 +194,9 @@ public class NewRobotServlet extends HttpServlet {
 			count = statement.executeUpdate();
 			conn.close();
 			
-			//BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-			//writer.write(robotCode);
-			// Write your data
-			//writer.close();
-			/*sql="ALTER TABLE robot DROP COLUMN file";  
-			String sql3="ALTER TABLE robot ADD RobotCode2 TEXT";
-			String sql2="UPDATE robot SET RobotCode2 = RobotCode";
-			statement = conn.prepareStatement(sql);
-			count = statement.executeUpdate();
-			statement = conn.prepareStatement(sql3);
-			count = statement.executeUpdate();
-			statement = conn.prepareStatement(sql2);
-			count = statement.executeUpdate();
-			//sql2="ALTER TABLE robot DROP COLUMN file";
-			sql="alter table robot change RobotCode2 file blob";
 			
-			statement = conn.prepareStatement(sql);
-			count = statement.executeUpdate();*/
 			robotAccessDTO.setFilePath("/Users/neethuantony/git/CCRoboGroupD/RobocodeV1/robocode/robots/"+packageName+"/"+robotName+".java");
-			/*//statement.setString(1, filePath2);
-			PreparedStatement ps1 = conn.prepareStatement("UPDATE robot SET file=? WHERE robotID='"+robotDTO.getRobotName()+"'");
-			byte[] byteData = RobotCode.getBytes("UTF-8");//Better to specify encoding
-			Blob blobData = conn.createBlob();
-			blobData.setBytes(1, byteData);
-			//Blob blob = conn.createBlob();
-			//blob.setBytes(1, RobotCode.getBytes());
-			ps1.setBlob(1, inputStream,(long) file.length());
-			ps1.executeUpdate();
-			//statement2.setBinaryStream(1, inputStream, (int) file.length());
-
-		     //int count = statement2.executeUpdate();*/
+		
 		}
 		catch (Exception e) {
 			 e.printStackTrace();

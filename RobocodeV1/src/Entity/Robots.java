@@ -85,9 +85,6 @@ public class Robots {
 	@Temporal(TemporalType.DATE)
 	private Date CreatedDate;
 	
-	@Column(name="Updated_Date")
-	private String UpdatedDate;
-	@Column(name="Updated_Time")
 
 	public Integer getRobotId() {
 		return RobotId;
@@ -149,13 +146,7 @@ public class Robots {
 		CreatedDate = createdDate;
 	}
 
-	public String getUpdatedDate() {
-		return UpdatedDate;
-	}
 
-	public void setUpdatedDate(String updatedDate) {
-		UpdatedDate = updatedDate;
-	}
 
 	
 	

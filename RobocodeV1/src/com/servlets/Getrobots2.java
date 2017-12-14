@@ -39,7 +39,7 @@ public class Getrobots2 extends HttpServlet {
 			
 			String domainName = req.getParameter("domain_name");
 			session.setAttribute("packageId", domainName);
-			System.out.println("tenant name is" + domainName);
+			System.out.println("tenant name is D" + domainName);
 			HashMap<String, List<String>> domainMap = (HashMap<String, List<String>>)session.getAttribute("DomainMap");
 			System.out.println(domainMap);
 			if(domainName.equals("all")){

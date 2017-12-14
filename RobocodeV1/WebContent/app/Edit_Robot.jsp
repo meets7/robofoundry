@@ -172,7 +172,7 @@ function onloadPage(){
 									String connectionURL = "jdbc:mysql://localhost:3306/robocode";
 									Class.forName("com.mysql.jdbc.Driver").newInstance();
 									Connection connection = DriverManager.getConnection(connectionURL, "root",
-											"1234");
+											"root");
 
 									Statement statement = connection.createStatement();
 									String selectString="SELECT userID, packageID, robotID from robot";
