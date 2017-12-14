@@ -30,7 +30,9 @@
 </head>
 
 <body>
-
+<%String role = "captain1";
+	if(role=="captain" || role =="coach") {%>
+	
 	<%@include file="../includes/header.jsp"%>
 	<br>
 	<br>
@@ -265,5 +267,8 @@
 		</div>
 		<!-- /.col-lg-6 (nested) -->
 	</div>
+	<%}else{ 
+		out.println("Not authorized to edit a robot");
+	}%>
 </body>
 </html>

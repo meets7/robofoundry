@@ -38,7 +38,6 @@ public class SaveRobotDAO {
 	 static {
 
          try {
-
                  Configuration configuration = new Configuration();
                  configuration.configure("hibernate.xml");
                  serviceRegistry = new ServiceRegistryBuilder().applySettings(configuration.getProperties()).buildServiceRegistry();

@@ -34,7 +34,7 @@ public class GetrobotDomain2 extends HttpServlet{
 			
 			String tenantName = req.getParameter("tenant_name");
 			session.setAttribute("tenant_name", tenantName);
-			System.out.println("tenant name is " + tenantName);
+			System.out.println("tenant name isB  " + tenantName);
 			@SuppressWarnings("unchecked")
 			HashMap<String, List<String>> tenantMap = (HashMap<String, List<String>>)session.getAttribute("tenantMap");
 			System.out.println(tenantMap);

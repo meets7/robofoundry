@@ -89,6 +89,8 @@ function getValueFromApplet(){
 </SCRIPT>
 </head>
 <body onload="selectAll();getDomains();selectAll();getRobots();selectAll()">
+
+
 <script type="text/javascript">
 	function Play(){
 		csvlist = '';
@@ -137,7 +139,8 @@ function getValueFromApplet(){
 							"root");
 
 					Statement statement = connection.createStatement();
-					String selectString="SELECT userID, packageID, robotID from robot";
+					String user = "User1";
+					String selectString="SELECT userID, packageID, robotID from robot where userID ='"+user+"'";
 					resultset = statement
 							.executeQuery(selectString);
 					

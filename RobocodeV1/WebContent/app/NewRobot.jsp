@@ -35,6 +35,10 @@ ResultSet resultset = null;
 </head>
 
 <body>
+
+<%String role = "coach";
+	if(role =="coach") {%>
+	
 	<%@include file="../includes/header.jsp"%>
 	<body>
 		<div class="container">
@@ -212,6 +216,10 @@ out.println("wrong entry" + e);
 </div>
 
 </div>
+
+<%}else{ 
+		out.println("Not authorized to create a new  robot");
+	}%>
 </body>
 </body>
 </html>
