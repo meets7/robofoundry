@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html dir="ltr" lang="en" >
+<head>
+    <title>Cloud Foundry</title>
+    
+    <meta charset='utf-8' />
+    <meta name='author' content="Dhruv Sangvikar" />
+    <link rel="icon" href="{{url_for('static',filename='img/favicon.png')}}">
+    
+    <meta name='Description' content=""/>
+    <meta name='keywords' content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <link href="{{url_for('static',filename='css/login.css')}}" rel="stylesheet"/>
+    
+</head>
+<body>
+    <div class="content">
+        <div class="header">
+            <div id="back-button"><a href="{{url_for('index')}}"><i class="fa fa-arrow-left" aria-hidden="true"></i></a></div>
+            <div class="header-image"></div>
+        </div>
+
+        <div class="island">
+            <h1>Welcome!</h1>
+            <div class="island-content">
+
+                <form action="login" method="post" novalidate="novalidate" accept-charset="UTF-8"><input type="hidden" name="X-Uaa-Csrf" value="ohwWPMsIiFo22z5oHRTcBi"/>
+
+                    <input name="username"
+                    type="text"
+                    placeholder="Username"
+                    class="form-control" autofocus="autofocus"/>
+                    <input name="password"
+                    type="password"
+                    placeholder="Password"
+                    class="form-control" autocomplete="off"/>
+                    <input type="submit" value="Sign in" class="island-button"/>
+
+                </form>
+            </div>
+        </div>
+        <div class="footer-spacer"></div>
+    </div>
+    <div class="footer">
+        <div class="copyright"
+        title="Version: 4.2.0, Commit: 4bb775f, Timestamp: 2017-05-18T05:55:36+0000, UAA: https://uaa.local.pcfdev.io">
+        Copyright © CloudFoundry.org Foundation, Inc.  2017. All Rights Reserved.
+
+        
+    </div>
+</div>
+
+
+
+
+</body>
+</html>

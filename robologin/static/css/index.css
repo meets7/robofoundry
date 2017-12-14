@@ -74,5 +74,15 @@ body {
 #robocodeframe{
   width: 100%; 
   height: 100%;
-
 }
+
+.jumbotron{
+  padding: 0px;
+}
+
+body {
+    overflow: auto;
+}
+footer{
+  position:static;
+ }
