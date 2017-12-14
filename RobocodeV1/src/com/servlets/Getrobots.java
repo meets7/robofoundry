@@ -29,9 +29,7 @@ public class Getrobots extends HttpServlet {
 			
 			String domainName = req.getParameter("domain_name");
 			session.setAttribute("packageId", domainName);
-			System.out.println("tenant name is" + domainName);
 			HashMap<String, List<String>> domainMap = (HashMap<String, List<String>>)session.getAttribute("DomainMap");
-			System.out.println(domainMap);
 			List<String> setOfvalues = domainMap.get(domainName);
 			out.println("<option>Select Robot</option>");
 			for(int i =0 ; i < setOfvalues.size(); i++)

@@ -38,8 +38,6 @@ import java.sql.ResultSet;
 import com.DAO.ConnectionFactory;
 import com.mysql.jdbc.Statement;
 
-
-
 /**
  * Servlet implementation class EditServlet
  */
@@ -50,7 +48,6 @@ public class EditServlet extends HttpServlet {
 	PreparedStatement ptmt = null;
 	ResultSet resultSet = null;
 
-
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -59,12 +56,12 @@ public class EditServlet extends HttpServlet {
 		// TODO Auto-generated constructor stub
 	}
 
-	/**	
+	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		RobotDTO robotDTO = new RobotDTO();
@@ -75,74 +72,47 @@ public class EditServlet extends HttpServlet {
 		}
 		System.out.println(selectedItem);
 		String[] words = selectedItem.split("-");
-		String userid =words[0];
+		String userid = words[0];
 		String packageid = words[1];
 		String robotid = words[2];
-		robotid=robotid.trim();
+		robotid = robotid.trim();
 		session.setAttribute("tenant_name", userid);
 		RobotDTO robotAccessDTO = new RobotDTO();
 		robotAccessDTO.setUserId("User");
 		robotAccessDTO.setRobotName(robotid);
 		robotAccessDTO.setPackageId(packageid);
 
-
-		//List<String> robotList = RobotDAO.getRobotList(robotAccessDTO);
-
-		
-		System.out.println("tenentid "+userid+"packageid "+packageid+"robotName "+robotid);
+		System.out.println("tenentid " + userid + "packageid " + packageid + "robotName " + robotid);
 		String url = "jdbc:mysql://localhost:3306/robocode";
 		String user = "root";
 		String password = "root";
-		System.out.println("Hi User");
 		try {
+			Class.forName("com.mysql.jdbc.Driver");
 			Connection conn = DriverManager.getConnection(url, user, password);
 
-		//	System.out.println("Hi");
 			Statement statement = (Statement) conn.createStatement();
-			String newstmt = "SELECT file,filepath,RobotCode,id from robot where robotID='"+robotid+"' and packageID='"+packageid+"' and userID = '"+userid+"'";
-			System.out.println(newstmt);
+			String newstmt = "SELECT Distinct RobotCode,id from robot where robotID='" + robotid + "' and packageID='"
+					+ packageid + "' and userID = '" + userid + "'";
 			resultSet = statement.executeQuery(newstmt);
-			//System.out.println("swxwxdedx");
-			String Robocode = "";
-			//System.out.println("Hi");
-			/*Blob blob=null;
-			while(resultSet.next()){
-				blob=resultSet.getBlob("file");
-				robotAccessDTO.setFilePath(resultSet.getString("filepath"));
-			}
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-			byte[] buf = new byte[1024];
-			InputStream in = blob.getBinaryStream();
-			int n = 0;
-			while ((n=in.read(buf))>=0)
-				baos.write(buf, 0, n);
-			in.close();
-			
-			byte[] bytes = baos.toByteArray();
-	
-			Robocode = new String(bytes);*/
-			//System.out.println("Robocode is "+Robocode);
-			while(resultSet.next()){
-				Robocode=resultSet.getString("RobotCode");
-				robotAccessDTO.setFilePath(resultSet.getString("filepath"));
+			String Robocode = "";
+
+			while (resultSet.next()) {
+				Robocode = resultSet.getString("RobotCode");
 			}
 			session.setAttribute("RobObj", robotAccessDTO);
-			//System.out.println("Robocode blah:"+Robocode);
 			session.setAttribute("robocode", Robocode);
 			request.setAttribute("robocode", Robocode);
 			PrintWriter out = response.getWriter();
 			out.println(Robocode);
 
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		catch (Exception e) {
-			 e.printStackTrace();
-		}
-	}		
-	static String readFile(String path, Charset encoding) 
-			throws IOException 
-			{
+	}
+
+	static String readFile(String path, Charset encoding) throws IOException {
 		byte[] encoded = Files.readAllBytes(Paths.get(path));
 		return new String(encoded, encoding);
-			}
+	}
 }

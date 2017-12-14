@@ -10,7 +10,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>View Robot</title>
- 
+
 <!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
 <link href="../css/bootstrap.min.css" rel="stylesheet">
 
@@ -31,7 +31,7 @@
 
 <body>
 
-<%@include file="../includes/header.jsp" %>
+	<%@include file="../includes/header.jsp"%>
 	<br>
 	<br>
 	<br>
@@ -50,15 +50,16 @@
 			<li onclick="New()"><a href="#open">New Robot</a></li>
 			<li onclick="Edit()"><a href="#open">Edit Robot</a></li>
 			<li onclick="View()"><a href="#open">View Robot</a></li>
-		
+
 		</ul>
 
 	</div>
-	<br><br>
+	<br>
+	<br>
 	<!-- /.row -->
 	<div class="row">
 		<div class="col-lg-6">
-		<form method="post" action="editservlet">
+			<form method="post" action="editservlet">
 				<div class="form-group">
 					<div class="input-group">
 						<%
@@ -66,45 +67,42 @@
 							Set<String> list_of_domains = new HashSet<String>();
 							Set<String> list_of_robots = new HashSet<String>();
 							HashMap<String, List<String>> map = new HashMap<String, List<String>>();
-							HashMap<String, List<String>> domain_robot_map = new HashMap<String, List<String>>();							
+							HashMap<String, List<String>> domain_robot_map = new HashMap<String, List<String>>();
 							//	String name = "Esther";
-								try {
-									String connectionURL = "jdbc:mysql://localhost:3306/robocode";
-									Class.forName("com.mysql.jdbc.Driver").newInstance();
-									Connection connection = DriverManager.getConnection(connectionURL, "root",
-											"root");
+							try {
+								String connectionURL = "jdbc:mysql://localhost:3306/robocode";
+								Class.forName("com.mysql.jdbc.Driver").newInstance();
+								Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
 
-									Statement statement = connection.createStatement();
-									String selectString="SELECT userID, packageID, robotID from robot";
-									resultset = statement
-											.executeQuery(selectString);
-									
-											%>
-<script type="text/javascript">
-		function getDomains() {
+								Statement statement = connection.createStatement();
+								String selectString = "SELECT userID, packageID, robotID from robot";
+								resultset = statement.executeQuery(selectString);
+						%>
+						<script type="text/javascript">
+							function getDomains() {
 
-			var x = document.getElementById("domain_name").value;
-			$.ajax({
-				url : "GetrobotDomain",
-				data : "tenant_name=" + x + "",
-				type : 'POST',
-				async : false,
-				success : function(html) {
-					console.log("html:" + html);
-					$("#package").html(html);
-				},
-				error : function(html) {
-					console.log("error html:" + html);
-				}
-			});
-		}	
-		</script>	
-						<select name="domain_name" id="domain_name" class="form-control" onchange="getDomains()"
-							>
+								var x = document.getElementById("domain_name").value;
+								$.ajax({
+									url : "GetrobotDomain",
+									data : "tenant_name=" + x + "",
+									type : 'POST',
+									async : false,
+									success : function(html) {
+										console.log("html:" + html);
+										$("#package").html(html);
+									},
+									error : function(html) {
+										console.log("error html:" + html);
+									}
+								});
+							}
+						</script>
+						<select name="domain_name" id="domain_name" class="form-control"
+							onchange="getDomains()">
 							<option>Select User</option>
 
 							<%
-									while (resultset.next()) {
+								while (resultset.next()) {
 										list_of_tenants.add(resultset.getString(1));
 										list_of_domains.add(resultset.getString(2));
 										list_of_robots.add(resultset.getString(3));
@@ -134,78 +132,75 @@
 
 										}
 									}
-								
-								Iterator iterator = list_of_tenants.iterator();
-								while (iterator.hasNext()) {
-									String key = (String) iterator.next();										
-								%>
+
+									Iterator iterator = list_of_tenants.iterator();
+									while (iterator.hasNext()) {
+										String key = (String) iterator.next();
+							%>
 
 							<option value="<%=key%>"><%=key%></option>
 							<%
 								}
-							session.setAttribute("tenantMap", map);
-							session.setAttribute("DomainMap", domain_robot_map);
-								%>
-						</select> <br /> 
+									session.setAttribute("tenantMap", map);
+									session.setAttribute("DomainMap", domain_robot_map);
+							%>
+						</select> <br />
 						<script type="text/javascript">
-		function getRobots() {
+							function getRobots() {
 
-			var x = document.getElementById("package").value;
-			//alert("x value:"+x);
-			$.ajax({
-				url : "Getrobots",
-				data : "domain_name=" + x + "",
-				type : 'POST',
-				async : false,
-				success : function(html) {
-					console.log("html:" + html);
-					$("#displayrobots").html(html);
-				},
-				error : function(html) {
-					console.log("error html:" + html);
-				}
-			});
-		}	
-		</script>		
-						<select name="package" id="package" class="form-control"
-							onchange="getRobots()" >
-							<option>Select Package</option>
-						
-								
-						</select> <br /> 
-						<script type="text/javascript">
-							function RobotNames(value)
-							{
-							    
-								   var x = document.getElementById("domain_name").value;
-							       	 var y = document.getElementById("package").value;
-							       	console.log("Hi");
-							            $.ajax({
-							    			url : "editservlet",
-							    			data: "domain_name="+x+"-"+y+"-"+value,
-							    			type : 'POST',
-							    			async : false,
-							    			success : function(html) {
-							    				$("#RobotCode").html(html);
-							    				console.log(html);
-							    			}
-							    		});
-							    		event.preventDefault();
-							         
-							        
+								var x = document.getElementById("domain_name").value;
+								var y = document.getElementById("package").value;
+								$.ajax({
+									url : "Getrobots",
+									data : "domain_name=" + x + "-" + y,
+									type : 'POST',
+									async : false,
+									success : function(html) {
+										$("#displayrobots").html(html);
+									},
+									error : function(html) {
+										console.log("error html:" + html);
+									}
+								});
 							}
-							</script>
-						<select name="displayrobots" id="displayrobots" onchange="RobotNames(this.value);"
-							class="form-control" >
+						</script>
+						<select name="package" id="package" class="form-control"
+							onchange="getRobots()">
+							<option>Select Package</option>
+
+
+						</select> <br />
+						<script type="text/javascript">
+							function getRobotCode(value) {
+
+								var x = document.getElementById("domain_name").value;
+								var y = document.getElementById("package").value;
+
+								$.ajax({
+									url : "editservlet",
+									data : "domain_name=" + x + "-" + y + "-"
+											+ value,
+									type : 'POST',
+									async : false,
+									success : function(response) {
+										$("#RobotCode").html(response);
+									}
+								});
+								event.preventDefault();
+
+							}
+						</script>
+						<select name="displayrobots" id="displayrobots"
+							onchange="getRobotCode(this.value);" class="form-control">
 							<option>Select Robot</option>
-							
+
 						</select>
 
 						<%
-								} catch (Exception e) {
-									out.println("wrong entry" + e);
-								}
-							%>
+							} catch (Exception e) {
+								out.println("wrong entry" + e);
+							}
+						%>
 						<br /> <br /> <br />
 
 					</div>
@@ -213,7 +208,8 @@
 
 
 			</form>
-			<form ><!-- action="updateRobot" method="post"> -->
+			<form>
+				<!-- action="updateRobot" method="post"> -->
 				<div class="form-group" id="RobotCodeh"
 					style="position: absolute; top: 150px; left: 15px;">
 					<textarea style="display: block;" name="editor" id="RobotCode"
@@ -221,31 +217,50 @@
 					</textarea>
 				</div>
 				<div>
-				<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-				<script type="text/javascript">
-				 function SaveRobot(){
-				
-			        	 var x = document.getElementById("RobotCode").value;
-			            $.ajax({
-			                url: 'updaterobot',
-			                type: 'POST',
-			                data: "RobotCode="+x,
-			                async : false,
-			                success : function(html) {
-			    				$("#RobotCode").html(html);
-			    				console.log(html);
-			    				$('<div id="alert">Successfully Updated</div>').appendTo(document.body);
-			                }
-			            });  
-			        	event.preventDefault();
-			        	}
-				 </script>
-				<!-- <a href="welcome.jsp">Done</a>-->
-				<input type="button" style="margin-top:50px; height:50px;width:70px" value="Done" onclick="SaveRobot()" >
-				
+					<br>
+					<br>
+					<br>
+					<br>
+					<br>
+					<br>
+					<br>
+					<br>
+					<br>
+					<br>
+					<br>
+					<br>
+					<br>
+					<br>
+					<br>
+					<script type="text/javascript">
+						function SaveRobot() {
+
+							var x = document.getElementById("RobotCode").value;
+							$
+									.ajax({
+										url : 'updaterobot',
+										type : 'POST',
+										data : "RobotCode=" + x,
+										async : false,
+										success : function(html) {
+											$("#RobotCode").html(html);
+											console.log(html);
+											$(
+													'<div id="alert">Successfully Updated</div>')
+													.appendTo(document.body);
+										}
+									});
+							event.preventDefault();
+						}
+					</script>
+					<!-- <a href="welcome.jsp">Done</a>-->
+					<input type="button"
+						style="margin-top: 50px; height: 50px; width: 70px" value="Done"
+						onclick="SaveRobot()">
+
 				</div>
 			</form>
-						
+
 
 		</div>
 		<!-- /.col-lg-6 (nested) -->

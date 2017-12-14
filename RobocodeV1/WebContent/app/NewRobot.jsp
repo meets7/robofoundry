@@ -49,6 +49,7 @@ ResultSet resultset = null;
 						<div class="col-lg-6">
 								<div class="input-group">
 									<%
+									
 									Set<String> list_of_tenants = new HashSet<String>();
 									Set<String> list_of_domains = new HashSet<String>();
 									Set<String> list_of_robots = new HashSet<String>();
@@ -171,6 +172,10 @@ out.println("wrong entry" + e);
 </div>
 <div class="row">
 	<button type="submit" class="btn btn-success" id="create" onclick="NewRobot();">Next</button>
+	<%
+	session.getAttribute("cfuserinfo");
+	out.println(session.getAttribute("cfuserinfo"));
+	%>
 </div>
 </div>
 

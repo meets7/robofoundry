@@ -78,7 +78,13 @@
 						game. Instead, the player must write the AI of the robot telling
 						it how to behave and react on events occurring in the battle
 						arena. Battles are running in real-time and on-screen.</a>
+						<br>
+							<%
+	session.getAttribute("cfuserinfo");
+	out.println(session.getAttribute("cfuserinfo"));
+	%>
 					</p>
+					
 					</center>
 				<!--  </div> -->
 			</div>

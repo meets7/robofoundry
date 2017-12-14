@@ -2,11 +2,31 @@
 <html>
 <head>
     <title>Profile</title>
-    <link rel="icon" href="{{url_for('static',filename='img/favicon.png')}}">
+    <link rel="icon" href="{{ url_for('static',filename='img/favicon.png') }}">
+    <link href="{{ url_for('static',filename='css/profile.css') }}"
+          rel="stylesheet">
 </head>
 <body>
-    <a href="https://uaa.local.pcfdev.io/profile">My Profile</a>
-    <br><br><br>
-    {{data}}
+<ul>
+    {% for appname in data['apps'] %}
+        <li>
+            <form method="post"
+                  target="_blank"
+                  action="http://localhost:8080/RobocodeV1/app/welcome"
+                  class="inline">
+                <input type="hidden" name="access_token"
+                       value="{{ data['access_token'] }}">
+                <input type="hidden" name="user_roles"
+                       value="{{  data['spaceWiseUserRoles'] }}">
+                <input type="hidden" name="user_info"
+                       value="{{ data['userinfo'] }}">
+                <button name="submit_param" value="submit_value"
+                        class="link-button">
+                    {{ appname }}
+                </button>
+            </form>
+        </li>
+    {% endfor %}
+</ul>
 </body>
 </html>

@@ -1,4 +1,5 @@
-from flask import Flask, render_template, session, request, url_for, redirect
+from flask import Flask, render_template, session, request, url_for, \
+    redirect, json
 import requests
 import json
 from requests_oauthlib import OAuth2Session
@@ -77,15 +78,15 @@ def profile():
     userinfo = json.loads(requests.get(
         userinfourl, headers=headers, verify=False).text)
     session['userinfo'] = userinfo
-    profileInfo['userinfo'] = session['userinfo']
+    profileInfo['userinfo'] = json.dumps(session['userinfo'])
 
     #get user roles by orgs and space
     usersummaryurl = 'https://api.local.pcfdev.io/v2/users/{' \
                      '}/summary'.format(userinfo['user_id'])
     usersummary = json.loads(requests.get(
         usersummaryurl, headers=headers, verify=False).text)
-    profileInfo['spaceWiseUserRoles'] = getSpaceWiseUserRoles(usersummary[
-                                                               'entity'])
+    profileInfo['spaceWiseUserRoles'] = json.dumps(getSpaceWiseUserRoles(
+        usersummary['entity']))
 
     # get user apps from all spaces
     url = 'http://api.local.pcfdev.io/v2/apps'
@@ -102,7 +103,7 @@ def profile():
             appsUrls[hostname] = 'http://{}.local.pcfdev.io'.format(hostname)
     profileInfo['apps'] = appsUrls
 
-    return jsonify(profileInfo)
+    return render_template('profile.html', data=profileInfo)
 
 
 def getSpaceWiseUserRoles(entity):

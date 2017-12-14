@@ -274,7 +274,7 @@ function onloadPage(){
 								
 						</select> <br /> 
 						<script type="text/javascript">
-							function RobotNames(value)
+							function getRobotCode(value)
 							{
 							    
 								   var x = document.getElementById("domain_name").value;
@@ -295,7 +295,7 @@ function onloadPage(){
 							        
 							}
 							</script>
-						<select name="displayrobots" id="displayrobots" onchange="RobotNames(this.value);"
+						<select name="displayrobots" id="displayrobots" onchange="getRobotCode(this.value);"
 							class="form-control" >
 							<option>Select Robot</option>
 						</select>

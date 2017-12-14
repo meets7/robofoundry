@@ -4,16 +4,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="WebApp_ID"
 	version="3.0"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
-	<display-name>RobocodeV1</display-name>
-	<servlet>
-		<servlet-name>login</servlet-name>
-		<servlet-class>servlets.LoginServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>login</servlet-name>
-		<url-pattern>/index.jsp</url-pattern>
-		<url-pattern>/app/loginServlet</url-pattern>
-	</servlet-mapping>
+	<display-name>Robocode</display-name>
 	<servlet>
 		<servlet-name>requestHandler</servlet-name>
 		<servlet-class>org.sampleapp.RequestHandler</servlet-class>
@@ -68,7 +59,7 @@
 		<url-pattern>/app/requestHandler</url-pattern>
 	</servlet-mapping>
 	<welcome-file-list>
-		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>welcome.jsp</welcome-file>
 	</welcome-file-list>
 	<servlet>
 		<servlet-name>create</servlet-name>
@@ -103,9 +94,6 @@
 		<servlet-name>View</servlet-name>
 		<url-pattern>/app/viewservlet</url-pattern>
 	</servlet-mapping>
-
-
-
 	<servlet>
 		<servlet-name>save</servlet-name>
 		<servlet-class>servlets.SaveRobotServlet</servlet-class>
@@ -179,104 +167,6 @@
 		<servlet-name>playBattle</servlet-name>
 		<url-pattern>/app/playBattle</url-pattern>
 	</servlet-mapping>
-
-
-	<servlet>
-		<servlet-name>new_role</servlet-name>
-		<servlet-class>com.servlets.NewRole</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>new_role</servlet-name>
-		<url-pattern>/app/newRole</url-pattern>
-	</servlet-mapping>
-	<servlet>
-		<servlet-name>Edit_role</servlet-name>
-		<servlet-class>com.servlets.EditRole</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>Edit_role</servlet-name>
-		<url-pattern>/app/Editrole</url-pattern>
-	</servlet-mapping>
-	<servlet>
-		<servlet-name>Create_role</servlet-name>
-		<servlet-class>com.servlets.CreateRole</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>Create_role</servlet-name>
-		<url-pattern>/app/Createrole</url-pattern>
-	</servlet-mapping>
-	<servlet>
-		<servlet-name>Edit1</servlet-name>
-		<servlet-class>com.servlets.EditRole1</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>Edit1</servlet-name>
-		<url-pattern>/app/editrole1</url-pattern>
-	</servlet-mapping>
-	<servlet>
-		<servlet-name>Edit2</servlet-name>
-		<servlet-class>com.servlets.EditRole2</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>Edit2</servlet-name>
-		<url-pattern>/app/editrole2</url-pattern>
-	</servlet-mapping>
-	<servlet>
-		<servlet-name>Edit3</servlet-name>
-		<servlet-class>com.servlets.EditRole3</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>Edit3</servlet-name>
-		<url-pattern>/app/editrole3</url-pattern>
-	</servlet-mapping>
-	<servlet>
-		<servlet-name>Hierarchy_role</servlet-name>
-		<servlet-class>com.servlets.Hierarchy</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>Hierarchy_role</servlet-name>
-		<url-pattern>/app/Hierarchyrole</url-pattern>
-	</servlet-mapping>
-	<servlet>
-		<servlet-name>Hierarchy_Edit</servlet-name>
-		<servlet-class>com.servlets.HierarchyEdit</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>Hierarchy_Edit</servlet-name>
-		<url-pattern>/app/Hierarchyedit</url-pattern>
-	</servlet-mapping>
-	<servlet>
-		<servlet-name>Package_Edit</servlet-name>
-		<servlet-class>com.servlets.PackageEdit</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>Package_Edit</servlet-name>
-		<url-pattern>/app/Packageedit</url-pattern>
-	</servlet-mapping>
-	<servlet>
-		<servlet-name>Map_Hier</servlet-name>
-		<servlet-class>com.servlets.Maph</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>Map_Hier</servlet-name>
-		<url-pattern>/app/Maph</url-pattern>
-	</servlet-mapping>
-	<servlet>
-		<servlet-name>Hierarchy_Edit1</servlet-name>
-		<servlet-class>com.servlets.HierarchyEdit1</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>Hierarchy_Edit1</servlet-name>
-		<url-pattern>/app/Hierarchyedit1</url-pattern>
-	</servlet-mapping>
-	<servlet>
-		<servlet-name>Hierarchy_Edit2</servlet-name>
-		<servlet-class>com.servlets.HierarchyEdit2</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>Hierarchy_Edit2</servlet-name>
-		<url-pattern>/app/Hierarchyedit2</url-pattern>
-	</servlet-mapping>
 	<servlet>
 		<servlet-name>Package_Edit1</servlet-name>
 		<servlet-class>com.servlets.PackageEdit1</servlet-class>
@@ -292,46 +182,6 @@
 	<servlet-mapping>
 		<servlet-name>Package_Edit2</servlet-name>
 		<url-pattern>/app/Packageedit2</url-pattern>
-	</servlet-mapping>
-	<servlet>
-		<servlet-name>H_role</servlet-name>
-		<servlet-class>com.servlets.NewHierarchy</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>H_role</servlet-name>
-		<url-pattern>/app/Hrole</url-pattern>
-	</servlet-mapping>
-	<servlet>
-		<servlet-name>HP_Create</servlet-name>
-		<servlet-class>com.servlets.HPermcreate</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>HP_Create</servlet-name>
-		<url-pattern>/app/HPcreate</url-pattern>
-	</servlet-mapping>
-	<servlet>
-		<servlet-name>HP_Edit</servlet-name>
-		<servlet-class>com.servlets.HPermEdit</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>HP_Edit</servlet-name>
-		<url-pattern>/app/HPedit</url-pattern>
-	</servlet-mapping>
-	<servlet>
-		<servlet-name>HP_Edit1</servlet-name>
-		<servlet-class>com.servlets.HPermEdit1</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>HP_Edit1</servlet-name>
-		<url-pattern>/app/HPedit1</url-pattern>
-	</servlet-mapping>
-	<servlet>
-		<servlet-name>HP_Edit2</servlet-name>
-		<servlet-class>com.servlets.HPermEdit2</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>HP_Edit2</servlet-name>
-		<url-pattern>/app/HPedit2</url-pattern>
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>scoreUpdate</servlet-name>
@@ -484,10 +334,12 @@
 		<servlet-name>createpackage</servlet-name>
 		<url-pattern>/app/createpackage</url-pattern>
 	</servlet-mapping>
-
-
-
-
-
-
+		<servlet>
+		<servlet-name>welcome</servlet-name>
+		<servlet-class>servlets.WelcomeServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>welcome</servlet-name>
+		<url-pattern>/app/welcome</url-pattern>
+	</servlet-mapping>
 </web-app>
