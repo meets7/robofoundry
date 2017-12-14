@@ -67,7 +67,7 @@ def profile():
     """
 
     if not session.get('oauth_token'):
-        return redirect(url_for('index'))
+        return redirect(url_for('login'))
     tokenString = "bearer {0}".format(session['oauth_token']['access_token'])
     headers = {"Authorization": tokenString}
     profileInfo = {'access_token':session['oauth_token']['access_token']}
@@ -77,9 +77,8 @@ def profile():
     userinfo = json.loads(requests.get(
         userinfourl, headers=headers, verify=False).text)
     session['userinfo'] = userinfo
-        # 'http://api.local.pcfdev.io/v2/users/{}'.format(
-        # userinfo['user_name'])
     profileInfo['userinfo'] = session['userinfo']
+
     #get user roles by orgs and space
     usersummaryurl = 'https://api.local.pcfdev.io/v2/users/{' \
                      '}/summary'.format(userinfo['user_id'])
@@ -102,41 +101,9 @@ def profile():
             hostname = app['entity']['host']
             appsUrls[hostname] = 'http://{}.local.pcfdev.io'.format(hostname)
     profileInfo['apps'] = appsUrls
-    # spaceurl = 'http://api.local.pcfdev.io/v2/spaces'
-    # spaceresponse = requests.get(spaceurl, headers=headers, verify=False)
-    # space_json_data = json.loads(spaceresponse.text)
-    # users = {}
-    # for resource in space_json_data['resources']:
-    #     entity = resource['entity']
-    #
-    #     # get all auditors
-    #     auditorurl = 'http://api.local.pcfdev.io' + entity['auditors_url']
-    #     auditorresponse = json.loads(requests.get(
-    #         auditorurl, headers=headers, verify=False).text)
-    #     users.update(getpeople(auditorresponse, 'auditor'))
-    #
-    #     # get all developers
-    #     devurl = 'http://api.local.pcfdev.io' + entity['developers_url']
-    #     devresponse = json.loads(requests.get(
-    #         devurl, headers=headers, verify=False).text)
-    #     users.update(getpeople(devresponse, 'developer'))
-    #
-    #     # get all managers
-    #     managerurl = 'http://api.local.pcfdev.io' + entity['managers_url']
-    #     managerresponse = json.loads(requests.get(
-    #         managerurl, headers=headers, verify=False).text)
-    #     users.update(getpeople(managerresponse, 'manager'))
 
     return jsonify(profileInfo)
 
-
-# def getpeople(roleresponse, role):
-#     userrolesmappping = {}
-#     for resource in roleresponse['resources']:
-#         entity = resource['entity']
-#         username = entity['username']
-#         userrolesmappping[username] = role
-#     return userrolesmappping
 
 def getSpaceWiseUserRoles(entity):
     spaceWiseUserRoles = {}
@@ -171,10 +138,3 @@ if __name__ == '__main__':
     os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
     app.secret_key = os.urandom(24)
     app.run(debug=True, use_reloader=True,ssl_context='adhoc')
-
-
-
-# Documentation
-
-# 1.#https://github.com/cloudfoundry/uaa/blob/master/docs/UAA-APIs.rst#client-registration-administration-apis
-#uaac client add --name triallogin --scope openid --authorized_grant_types 'authorization_code,client_credentials' --access_token_validity 1209600 --authorities oauth.login --redirect_uri 'http://localhost:5000/profile'
