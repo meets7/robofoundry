@@ -30,8 +30,12 @@
 </head>
 
 <body>
-<%String role = "captain1";
-	if(role=="captain" || role =="coach") {%>
+<%
+String roles = (String)session.getAttribute("userrole");
+out.println(roles);
+String user = (String)session.getAttribute("username");
+
+if(roles.equals("manager")|| roles.equals("developer")) {%>
 	
 	<%@include file="../includes/header.jsp"%>
 	<br>
@@ -77,7 +81,7 @@
 								Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
 
 								Statement statement = connection.createStatement();
-								String selectString = "SELECT userID, packageID, robotID from robot";
+								String selectString = "SELECT userID, packageID, robotID from robot where userID = '"+user+"'";
 								resultset = statement.executeQuery(selectString);
 						%>
 						<script type="text/javascript">

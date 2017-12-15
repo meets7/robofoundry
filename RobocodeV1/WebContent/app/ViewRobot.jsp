@@ -75,9 +75,8 @@
 											"root");
 
 									Statement statement = connection.createStatement();
-									String user = "User1";
-									String org = "org1";
-									String selectString="SELECT userID, packageID, robotID from robot where userID ='"+user+"' and org ='"+org+"' ";
+									String user = (String)session.getAttribute("username");
+									String selectString="SELECT userID, packageID, robotID from robot where userID ='"+user+"'";
 									resultset = statement
 											.executeQuery(selectString);
 									

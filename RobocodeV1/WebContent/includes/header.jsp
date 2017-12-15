@@ -79,10 +79,18 @@
 						</ul></li>
 					<li class="page-scroll"><a href="PlayBattle.jsp">Play
 							Battle!</a></li>
-					<li class="page-scroll"><a href="#view">Settings</a></li>
-<!-- 					<li class="page-scroll"><a href="#view"><img
-							class="img-responsive" src="../img/power button.png" alt=""
-							ALIGN="RIGHT" hspace="1">Logout</a></li> -->
+					
+					<%String tempname = (String)session.getAttribute("username");
+					String temprole = (String)session.getAttribute("userrole");%>
+					<li class="dropdown"><a href="#view">View</a>
+						<ul class="dropdown-menu">
+							<li>&nbsp Hi, My name is &nbsp <%=tempname %></li>
+							<li>&nbsp I am a <%=temprole %></li>
+					
+							<li><a href="Logout.jsp" onClick = "window.close()">Logout</a></li>
+						</ul></li>
+						
+					<li class="page-scroll"><a href="Logout.jsp">Logout</a></li>
 				</ul>
 			</div>
 			<!-- /.navbar-collapse -->

@@ -51,8 +51,12 @@ public class WelcomeServlet extends HttpServlet {
 		cfuserinfo = new ObjectMapper().readValue(userinfo, HashMap.class);
 		session.setAttribute("cfaccess_token", cfaccess_token);
 		session.setAttribute("cfuserinfo", cfuserinfo);
-		session.setAttribute("cfroles", cfrole);
+		session.setAttribute("userrole", cfrole);
 		session.setAttribute("cfspace_guid", spaceguid);
+		
+		String username = cfuserinfo.get("user_name").toString(); 
+        session.setAttribute("username", username);
+        
 
 		// String userDTO = session.getAttribute("userx").toString();
 		// if (request.getParameter("domain_name") != null) {
