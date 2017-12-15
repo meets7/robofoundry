@@ -146,10 +146,14 @@ def profile():
             appsUrls[hostname] = {
                 'url': 'http://{}.local.pcfdev.io'.format(hostname),
                 'space_guid': app['entity']['space_guid'],
-                'userRole': getSpaceRole(spaceWiseUserRoles,app['entity'][
+                'userRole': getSpaceRole(spaceWiseUserRoles, app['entity'][
                     'space_guid'], userinfo['user_name'])}
     profileInfo['apps'] = appsUrls
 
+    organization_guid = getOrganizationId(space_json_data)
+    profileInfo['org_id'] = organization_guid
+    profileInfo['org_users'] = json.dumps(getOrganizationUsers(
+        session, organization_guid))
     return render_template('profile.html', data=profileInfo)
 
 
@@ -189,6 +193,25 @@ def getSpaceWiseUserRoles(entity):
     return spaceWiseUserRoles
 
 
+def getOrganizationUsers(session, organization_guid):
+    tokenString = "bearer {0}".format(session['oauth_token']['access_token'])
+    headers = {"Authorization": tokenString}
+    orgusersurl = baseAPIurl + '/v2/organizations/{}/users'.format(
+        organization_guid)
+    orgusersresponse = json.loads(requests.get(
+        orgusersurl, headers=headers, verify=False).text)
+    orgusers = {}
+    if orgusersresponse['resources']:
+        for orguser in orgusersresponse['resources']:
+            orgusers[orguser['entity']['username']] = orguser['metadata']['guid']
+    return orgusers
+
+
+def getOrganizationId(space_json_data):
+    if space_json_data.get('resources'):
+        return space_json_data['resources'][0]['entity']['organization_guid']
+
+
 @app.route('/manage')
 def manage():
     if not session.get('oauth_token'):
@@ -202,7 +225,7 @@ def manage():
 
 
 @app.route('/getusers')
-def getUsers():
+def getUsersInSpace():
     guid = request.args.get('guid')
     orgusersurl = baseAPIurl + '/v2/spaces/{0}/user_roles'.format(guid)
     tokenString = "bearer {0}".format(session['oauth_token']['access_token'])

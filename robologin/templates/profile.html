@@ -73,6 +73,10 @@
                        value="{{ data['apps'][appname]['userRole'] }}">
                 <input type="hidden" name="user_info"
                        value="{{ data['userinfo'] }}">
+                <input type="hidden" name="org_id"
+                       value="{{ data['org_id'] }}">
+                <input type="hidden" name="org_users"
+                       value="{{ data['org_users'] }}">
                 <input type="hidden" name="space_guid"
                        value="{{ data['apps'][appname]['space_guid'] }}">
                 <button name="submit_param" value="submit_value"
@@ -91,8 +95,7 @@
 <!-- <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script> -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-<script type="text/javascript"
-        src="{{ url_for('static',filename='js/applist.js') }}"></script>
+
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <!-- <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script> -->
 </body>

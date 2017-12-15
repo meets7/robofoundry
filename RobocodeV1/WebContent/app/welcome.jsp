@@ -82,6 +82,7 @@
 							<%
 	session.getAttribute("cfuserinfo");
 	out.println(session.getAttribute("cfuserinfo"));
+								out.println(session.getAttribute("cforgusers"));
 	%>
 					</p>
 					

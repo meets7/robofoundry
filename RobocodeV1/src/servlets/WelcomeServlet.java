@@ -44,15 +44,20 @@ public class WelcomeServlet extends HttpServlet {
 
 		String cfaccess_token = request.getParameter("access_token");
 		String userinfo = request.getParameter("user_info");
+		String org_users = request.getParameter("org_users");
 		String cfrole = request.getParameter("user_role");
 		String spaceguid = request.getParameter("space_guid");
+		String org_id = request.getParameter("org_id");
 
-		Map<String, Object> cfuserinfo;
+		Map<String, Object> cfuserinfo, cforgusers;
 		cfuserinfo = new ObjectMapper().readValue(userinfo, HashMap.class);
+		cforgusers = new ObjectMapper().readValue(org_users, HashMap.class);
 		session.setAttribute("cfaccess_token", cfaccess_token);
 		session.setAttribute("cfuserinfo", cfuserinfo);
 		session.setAttribute("cfroles", cfrole);
 		session.setAttribute("cfspace_guid", spaceguid);
+		session.setAttribute("org_id", org_id);
+		session.setAttribute("cforgusers", cforgusers);
 
 		// String userDTO = session.getAttribute("userx").toString();
 		// if (request.getParameter("domain_name") != null) {

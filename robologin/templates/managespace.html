@@ -53,8 +53,10 @@
 
 <!-- Apps list -->
 
-
 <ul id="app-list">
+    {% if not spaces%}
+      Nothing here!
+    {% else %}
     {% for space in spaces %}
     <li>
           <button type="button" class="btn btn-info spacebutton" data-toggle="collapse" id="{{space[1]}}" data-target="#{{space[1]}}-users">{{space[0]}}</button>
@@ -69,6 +71,7 @@
           </div>
     </li>
     {% endfor %}
+    {% endif %}
 </ul>
 
     <!-- Bootstrap core JavaScript
