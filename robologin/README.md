@@ -15,4 +15,4 @@ https://docs.cloudfoundry.org/concepts/architecture/uaa.html#uaa-scopes
 https://github.com/cloudfoundry/uaa/blob/master/docs/UAA-APIs.rst#client-registration-administration-apis
 
 Command for registering client in UAAC:
-#uaac client add --name triallogin --scope openid --authorized_grant_types 'authorization_code,client_credentials' --access_token_validity 1209600 --authorities oauth.login --redirect_uri 'http://localhost:5000/profile'
+#uaac client add --name triallogin --scope 'openid user_attributes roles scim.read cloud_controller.admin' --authorized_grant_types 'authorization_code,client_credentials' --access_token_validity 1209600 --authorities oauth.login --redirect_uri 'http://localhost:5000/profile'
