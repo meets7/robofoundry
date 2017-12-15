@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>View Robot</title>
+<title>View Shared Robots</title>
  
 <!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
 <link href="../css/bootstrap.min.css" rel="stylesheet">
@@ -38,7 +38,7 @@
 	<br>
 	<br>
 	<br>
-	<h1>View Robot</h1>
+	<h1>Robots shared with me</h1>
 	<br>
 	<div class="dropdown">
 
@@ -76,8 +76,8 @@
 
 									Statement statement = connection.createStatement();
 									String user = (String)session.getAttribute("username");
-									//String selectString="SELECT u.userID,r.packageID,r.robotID from robot as r inner join relationship as u on r.robotID = u.robotid where u.userid ='"+user+"'";
-									String selectString = "SELECT userID, packageID, robotID from robot where userID ='"+user+"'";
+									String selectString="SELECT u.userID,r.packageID,r.robotID from robot as r inner join relationship as u on r.robotID = u.robotid where u.userid ='"+user+"'";
+									//String selectString = "SELECT userID, packageID, robotID from robot where userID ='"+user+"'";
 									resultset = statement.executeQuery(selectString);
 									
 									

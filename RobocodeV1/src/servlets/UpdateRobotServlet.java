@@ -112,51 +112,11 @@ public class UpdateRobotServlet extends HttpServlet {
 			statement.setString(1, RobotCode);
 			int count = statement.executeUpdate();
 			conn.close();
-//			PreparedStatement statement2 = conn.prepareStatement(sql2);
-			
-//			count = statement2.executeUpdate();
-			//System.out.println(robotDTO.getRobotCode());
-//			try (Writer writer = new BufferedWriter(new OutputStreamWriter(
-//					new FileOutputStream("//Users//neethuantony//git//CCRoboGroupD//RobocodeV1/robocode//robots//"+robotDTO.getPackageId()+"//"+robotDTO.getRobotName()+".java"), "utf-8"))) {
-//				writer.write(robotDTO.getRobotCode());
-//			}
-//			String filePath2="/Users/neethuantony/git/CCRoboGroupD/RobocodeV1/robocode/robots/"+robotDTO.getPackageId()+"/"+robotDTO.getRobotName()+".java";
-			//update file in database
-			//sql="UPDATE robot SET file = ? WHERE robotID='"+robotDTO.getRobotName()+"'";
-			//sql2="select convert(file using utf8) from robot";
-			/*RobotCode has already been updated in the database, so we don't need the next statement
-			String sql3="update robot set RobotCode = select convert(file using utf8) from robot where id='"+robotDTO.getRobotId()+"'";*/
-			//sql="ALTER TABLE robot DROP COLUMN file";  
-			//String sql3="ALTER TABLE robot ADD RobotCode2 TEXT";
-			//sql2="UPDATE robot SET RobotCode2 = RobotCode";
-			//statement = conn.prepareStatement(sql);
-			//count = statement.executeUpdate();
-			//statement = conn.prepareStatement(sql3);
-			//count = statement.executeUpdate();
-			//statement = conn.prepareStatement(sql2);
-			//count = statement.executeUpdate();
-			//sql="alter table robot change RobotCode2 file blob";
-			//statement = conn.prepareStatement(sql);
-//			File file=new File(filePath2);
-//			InputStream inputStream = new FileInputStream(file);
-//			statement.setBinaryStream(1,inputStream,(int)file.length());
-			//count = statement.executeUpdate();
 
 			request.setAttribute("robotID", robotDTO.getRobotName());
 			request.setAttribute("packageID",robotDTO.getPackageId());
 			request.setAttribute("Robocode",RobotCode);
-			/*//statement.setString(1, filePath2);
-			PreparedStatement ps1 = conn.prepareStatement("UPDATE robot SET file=? WHERE robotID='"+robotDTO.getRobotName()+"'");
-			byte[] byteData = RobotCode.getBytes("UTF-8");//Better to specify encoding
-			Blob blobData = conn.createBlob();
-			blobData.setBytes(1, byteData);
-			//Blob blob = conn.createBlob();
-			//blob.setBytes(1, RobotCode.getBytes());
-			ps1.setBlob(1, inputStream,(long) file.length());
-			ps1.executeUpdate();
-			//statement2.setBinaryStream(1, inputStream, (int) file.length());
 
-		     //int count = statement2.executeUpdate();*/
 		}
 		catch (Exception e) {
 			e.printStackTrace();

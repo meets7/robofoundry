@@ -1,36 +1,40 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <%@page import="java.sql.*"%>
 <%@page import="java.util.*"%>
 <%
-	ResultSet resultset = null;
+ResultSet resultset = null;
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>View Robot</title>
- 
-<!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
-<link href="../css/bootstrap.min.css" rel="stylesheet">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Share Robots</title>
+	<!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
+	<link href="../css/bootstrap.min.css" rel="stylesheet">
 
-<!-- Custom CSS -->
-<link href="../css/freelancer.css" rel="stylesheet">
+	<!-- Custom CSS -->
+	<link href="../css/freelancer.css" rel="stylesheet">
 
-<!-- Custom Fonts -->
-<link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet"
+	<!-- Custom Fonts -->
+	<link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet"
 	type="text/css">
-<link
-	href='https://fonts.googleapis.com/css?family=Righteous|Fredoka+One'
-	rel='stylesheet' type='text/css'>
 
-<link
+	<link
 	href="http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic"
 	rel="stylesheet" type="text/css">
+	<style>
+		#RobotCode {
+			position: absolute;
+			top: 200px;
+			right: 0;
+			bottom: 0;
+			left: 0;
+		}
+	</style>
 </head>
 
 <body>
-
 <%@include file="../includes/header.jsp" %>
 	<br>
 	<br>
@@ -38,22 +42,8 @@
 	<br>
 	<br>
 	<br>
-	<h1>View Robot</h1>
+	<h1>Share My Robot</h1>
 	<br>
-	<div class="dropdown">
-
-		<!-- trigger button -->
-		<button>File</button>
-
-		<!-- dropdown menu -->
-		<ul class="dropdown-menu">
-			<li onclick="New()"><a href="#open">New Robot</a></li>
-			<li onclick="Edit()"><a href="#open">Edit Robot</a></li>
-			<li onclick="View()"><a href="#open">View Robot</a></li>
-		
-		</ul>
-
-	</div>
 	<br><br>
 	<!-- /.row -->
 	<div class="row">
@@ -76,10 +66,9 @@
 
 									Statement statement = connection.createStatement();
 									String user = (String)session.getAttribute("username");
-									//String selectString="SELECT u.userID,r.packageID,r.robotID from robot as r inner join relationship as u on r.robotID = u.robotid where u.userid ='"+user+"'";
-									String selectString = "SELECT userID, packageID, robotID from robot where userID ='"+user+"'";
-									resultset = statement.executeQuery(selectString);
-									
+									String selectString="SELECT userID, packageID, robotID from robot where userID ='"+user+"'";
+									resultset = statement
+											.executeQuery(selectString);
 									
 											%>
 <script type="text/javascript">
@@ -104,6 +93,7 @@
 						<select name="domain_name" id="domain_name" class="form-control" onchange="getDomains()"
 							>
 							<option>Select User</option>
+
 							<%
 									while (resultset.next()) {
 										list_of_tenants.add(resultset.getString(1));
@@ -188,12 +178,10 @@
 							    			async : false,
 							    			success : function(html) {
 							    				$("#RobotCode").html(html);
-							    				console.log(html);
+							    				console.log(html)	;
 							    			}
 							    		});
-							    		event.preventDefault();
-							         
-							        
+							    		event.preventDefault();       
 							}
 							</script>
 						<select name="displayrobots" id="displayrobots" onchange="RobotNames(this.value);"
@@ -214,42 +202,28 @@
 
 
 			</form>
-			<form ><!-- action="updateRobot" method="post"> -->
-				<div class="form-group" id="RobotCodeh"
-					style="position: absolute; top: 150px; left: 15px;">
-					<textarea disabled style="display: block;" name="editor" id="RobotCode"
-						rows="16" cols="100">
-					</textarea>
-				</div>
-				<div>
-				<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-				<script type="text/javascript">
-				 function SaveRobot(){
-				
-			        	 var x = document.getElementById("RobotCode").value;
-			            $.ajax({
-			                url: 'updateRobot',
-			                type: 'POST',
-			                data: "RobotCode="+x,
-			                async : false,
-			                success : function(html) {
-			    				$("#RobotCode").html(html);
-			    				console.log(html);
-			    				$('<div id="alert">Successfully Updated</div>').appendTo(document.body);
-			                }
-			            });  
-			        	event.preventDefault();
-			        	}
-				 </script>
-				<!-- <a href="welcome.jsp">Done</a>-->
-				<input type="button" style="height:50px;width:70px" value="Done" onclick="window.location='welcome.jsp'" >
-				
-				</div>
-			</form>
-						
+		<form action="ShareRobotServlet">
+			<select name="orgusers" id="orgusers" class="form-control">
+				<option value="0">Choose user to share robot</option>
+
+				<%
+					HashMap<String, String> orgusers = (HashMap)session.getAttribute("orgusers");
+			        for(String key : orgusers.keySet()) 
+					{%>
+			        	<option value="<%=key%>"><%=key%></option>
+				<%} %>
+			</select>	
+				<input id="submit" type="submit">
+		</form>	
+			
+			
+
 
 		</div>
 		<!-- /.col-lg-6 (nested) -->
 	</div>
+	<div id="statusmessage"></div>
+	
+	<script type="text/javascript" src="../js/sharerobot.js"></script>
 </body>
 </html>

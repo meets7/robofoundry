@@ -70,24 +70,26 @@
 							<li><a href="#EDomain">Domain</a></li>
 							<li><a href="#ERole">Role</a></li>
 						</ul></li>
-					<li class="dropdown"><a href="#view">View</a>
+					<li class="dropdown"><a href="#view">View Robots</a>
 						<ul class="dropdown-menu">
-							<li><a href="ViewRobot.jsp">Robot</a></li>
-							<li><a href="#VUser">User</a></li>
+							<li><a href="ViewRobot.jsp">My Robots</a></li>
+							<li><a href="ViewSharedRobots.jsp">Shared with me</a></li>
 							<li><a href="#VDomain">Domain</a></li>
 							<li><a href="#VRole">Role</a></li>
 						</ul></li>
+					
+					<li class="page-scroll"><a href="ShareRobots.jsp">Share Robots</a></li>
+							
 					<li class="page-scroll"><a href="PlayBattle.jsp">Play
 							Battle!</a></li>
 					
 					<%String tempname = (String)session.getAttribute("username");
-					String temprole = (String)session.getAttribute("userrole");%>
-					<li class="dropdown"><a href="#view">View</a>
+					  String temprole = (String)session.getAttribute("userrole");%>
+					<li class="dropdown"><a href="#view">Profile</a>
 						<ul class="dropdown-menu">
 							<li>&nbsp Hi, My name is &nbsp <%=tempname %></li>
 							<li>&nbsp I am a <%=temprole %></li>
-					
-							<li><a href="Logout.jsp" onClick = "window.close()">Logout</a></li>
+							<li><a href="Logout.jsp"">Logout</a></li>
 						</ul></li>
 						
 					<li class="page-scroll"><a href="Logout.jsp">Logout</a></li>

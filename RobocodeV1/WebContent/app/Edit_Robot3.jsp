@@ -34,7 +34,6 @@
 String roles = (String)session.getAttribute("userrole");
 out.println(roles);
 String user = (String)session.getAttribute("username");
-
 if(roles.equals("manager")|| roles.equals("developer")) {%>
 	
 	<%@include file="../includes/header.jsp"%>
