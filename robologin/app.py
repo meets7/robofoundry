@@ -7,12 +7,12 @@ from flask import Flask, render_template, session, request, url_for, \
 from requests_oauthlib import OAuth2Session
 
 app = Flask(__name__)
-client_id = "triallogin"
-client_secret = "trial"
-authorization_base_url = 'https://uaa.local.pcfdev.io/oauth/authorize/'
-token_url = 'https://uaa.local.pcfdev.io/oauth/token'
-baseAPIurl = 'https://api.local.pcfdev.io'
-baseUAAurl = 'https://uaa.local.pcfdev.io'
+client_id = "robofoundry"
+client_secret = "robofoundry"
+authorization_base_url = 'https://uaa.bosh-lite.com/oauth/authorize/'
+token_url = 'https://uaa.bosh-lite.com/oauth/token'
+baseAPIurl = 'https://api.bosh-lite.com'
+baseUAAurl = 'https://uaa.bosh-lite.com'
 
 
 @app.route('/')
@@ -144,7 +144,7 @@ def profile():
         for app in routes_url_response['resources']:
             hostname = app['entity']['host']
             appsUrls[hostname] = {
-                'url': 'http://{}.local.pcfdev.io'.format(hostname),
+                'url': 'http://{}.bosh-lite.com'.format(hostname),
                 'space_guid': app['entity']['space_guid'],
                 'userRole': getSpaceRole(spaceWiseUserRoles, app['entity'][
                     'space_guid'], userinfo['user_name'])}
@@ -253,11 +253,12 @@ def getUsersInSpace():
 @app.route('/logout')
 def logout():
     session['logged_in'] = False
-    return redirect('https://uaa.local.pcfdev.io/logout.do')
+    return redirect('https://uaa.bosh-lite.com/logout.do')
 
+port = int(os.getenv("PORT"))
 
 if __name__ == '__main__':
     os.environ['DEBUG'] = "1"
     os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
     app.secret_key = os.urandom(24)
-    app.run(debug=True, use_reloader=True, ssl_context='adhoc')
+    app.run(host='0.0.0.0',debug=True, ssl_context='adhoc', port=port)
