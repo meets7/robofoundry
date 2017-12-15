@@ -44,14 +44,15 @@ public class WelcomeServlet extends HttpServlet {
 
 		String cfaccess_token = request.getParameter("access_token");
 		String userinfo = request.getParameter("user_info");
-		String roles = request.getParameter("user_roles");
+		String cfrole = request.getParameter("user_role");
+		String spaceguid = request.getParameter("space_guid");
 
-		Map<String, Object> cfroles, cfuserinfo;
+		Map<String, Object> cfuserinfo;
 		cfuserinfo = new ObjectMapper().readValue(userinfo, HashMap.class);
-		cfroles = new ObjectMapper().readValue(roles, HashMap.class);
 		session.setAttribute("cfaccess_token", cfaccess_token);
 		session.setAttribute("cfuserinfo", cfuserinfo);
-		session.setAttribute("cfroles", cfroles);
+		session.setAttribute("cfroles", cfrole);
+		session.setAttribute("cfspace_guid", spaceguid);
 
 		// String userDTO = session.getAttribute("userx").toString();
 		// if (request.getParameter("domain_name") != null) {
@@ -63,7 +64,7 @@ public class WelcomeServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession(true);
 		if (session.getAttribute("cfaccess_token") == null) {
 			response.sendRedirect("https://localhost:5000");
 			return;

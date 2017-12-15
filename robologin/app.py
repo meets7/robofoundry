@@ -56,12 +56,7 @@ def callback():
     token = cloudfoundry.fetch_token(token_url, client_secret=client_secret,
                                      authorization_response=request.url,
                                      verify=False)
-
-    # At this point you can fetch protected resources but lets save
-    # the token and show how this is done from a persisted token
-    # in /profile.
     session['oauth_token'] = token
-
     return redirect(url_for('.profile'))
 
 
@@ -148,10 +143,20 @@ def profile():
             routes_url, headers=headers, verify=False).text)
         for app in routes_url_response['resources']:
             hostname = app['entity']['host']
-            appsUrls[hostname] = 'http://{}.local.pcfdev.io'.format(hostname)
+            appsUrls[hostname] = {
+                'url': 'http://{}.local.pcfdev.io'.format(hostname),
+                'space_guid': app['entity']['space_guid'],
+                'userRole': getSpaceRole(spaceWiseUserRoles,app['entity'][
+                    'space_guid'], userinfo['user_name'])}
     profileInfo['apps'] = appsUrls
 
     return render_template('profile.html', data=profileInfo)
+
+
+def getSpaceRole(spaceWiseUserRoles, spaceguid, username):
+    for id in spaceWiseUserRoles:
+        if id == spaceguid:
+            return spaceWiseUserRoles[id]['role']
 
 
 def isInThisRole(roleresponse, username):
