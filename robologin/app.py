@@ -150,7 +150,7 @@ def profile():
                     'space_guid'], userinfo['user_name'])}
     profileInfo['apps'] = appsUrls
 
-    organization_guid = getOrganizationId(space_json_data)
+    organization_guid = getOrganizationId(session, appsData)
     profileInfo['org_id'] = organization_guid
     profileInfo['org_users'] = json.dumps(getOrganizationUsers(
         session, organization_guid))
@@ -207,9 +207,16 @@ def getOrganizationUsers(session, organization_guid):
     return orgusers
 
 
-def getOrganizationId(space_json_data):
-    if space_json_data.get('resources'):
-        return space_json_data['resources'][0]['entity']['organization_guid']
+def getOrganizationId(session, app_Data):
+    tokenString = "bearer {0}".format(session['oauth_token']['access_token'])
+    headers = {"Authorization": tokenString}
+    spaceguid = app_Data['resources'][0]['entity']['space_guid']
+    spaceUrl = baseAPIurl + '/v2/spaces/{}'.format(spaceguid)
+    spaceinfo = json.loads(requests.get(
+        spaceUrl, headers=headers, verify=False).text)
+    orgId = spaceinfo['entity']['organization_guid']
+    return orgId
+
 
 
 @app.route('/manage')
