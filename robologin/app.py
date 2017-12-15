@@ -253,7 +253,7 @@ def getUsersInSpace():
 @app.route('/logout')
 def logout():
     session['logged_in'] = False
-    return redirect(url_for('index'))
+    return redirect('https://uaa.local.pcfdev.io/logout.do')
 
 
 if __name__ == '__main__':
