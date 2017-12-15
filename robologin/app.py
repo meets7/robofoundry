@@ -81,13 +81,56 @@ def profile():
     session['userinfo'] = userinfo
     profileInfo['userinfo'] = json.dumps(session['userinfo'])
 
-    # get user roles by orgs and space
+    # Method 1 : get user roles by orgs and space
     usersummaryurl = '{0}/v2/users/{1}/summary'.format(
         baseAPIurl, userinfo['user_id'])
     usersummary = json.loads(requests.get(
         usersummaryurl, headers=headers, verify=False).text)
-    profileInfo['spaceWiseUserRoles'] = json.dumps(getSpaceWiseUserRoles(
-        usersummary['entity']))
+
+    if usersummary.get('entity'):
+        spaceWiseUserRoles = getSpaceWiseUserRoles(usersummary['entity'])
+    else:
+        # Method 2 : get user roles by orgs and space
+        spaceWiseUserRoles = {}
+        spaceurl = baseAPIurl + '/v2/spaces'
+        spaceresponse = requests.get(spaceurl, headers=headers, verify=False)
+        space_json_data = json.loads(spaceresponse.text)
+        for spaceresource in space_json_data['resources']:
+            entity = spaceresource['entity']
+            spaceGuid = spaceresource['metadata']['guid']
+
+            # get all auditors
+            auditorurl = 'http://api.local.pcfdev.io' + entity['auditors_url']
+            auditorresponse = json.loads(requests.get(
+                auditorurl, headers=headers, verify=False).text)
+            if isInThisRole(auditorresponse, userinfo['user_name']):
+                spaceWiseUserRoles[spaceGuid] = {
+                    'role': 'auditor',
+                    'name': spaceresource['entity']['name']
+                }
+
+            # get all developers
+            devurl = 'http://api.local.pcfdev.io' + entity['developers_url']
+            devresponse = json.loads(requests.get(
+                devurl, headers=headers, verify=False).text)
+            if isInThisRole(devresponse, userinfo['user_name']):
+                spaceWiseUserRoles[spaceGuid] = {
+                    'role': 'developer',
+                    'name': spaceresource['entity']['name']
+                }
+
+            # get all managers
+            managerurl = 'http://api.local.pcfdev.io' + entity['managers_url']
+            managerresponse = json.loads(requests.get(
+                managerurl, headers=headers, verify=False).text)
+            if isInThisRole(managerresponse, userinfo['user_name']):
+                spaceWiseUserRoles[spaceGuid] = {
+                    'role': 'manager',
+                    'name': spaceresource['entity']['name']
+                }
+
+    profileInfo['spaceWiseUserRoles'] = json.dumps(spaceWiseUserRoles)
+    session['spaceWiseUserRoles'] = spaceWiseUserRoles
 
     # get user apps from all spaces
     url = '{}/v2/apps'.format(baseAPIurl)
@@ -105,6 +148,14 @@ def profile():
     profileInfo['apps'] = appsUrls
 
     return render_template('profile.html', data=profileInfo)
+
+
+def isInThisRole(roleresponse, username):
+    for resource in roleresponse['resources']:
+        if resource['entity']['username'] == username:
+            return True
+
+    return False
 
 
 def getSpaceWiseUserRoles(entity):
