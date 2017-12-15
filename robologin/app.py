@@ -97,7 +97,7 @@ def profile():
             spaceGuid = spaceresource['metadata']['guid']
 
             # get all auditors
-            auditorurl = 'http://api.local.pcfdev.io' + entity['auditors_url']
+            auditorurl = baseAPIurl + entity['auditors_url']
             auditorresponse = json.loads(requests.get(
                 auditorurl, headers=headers, verify=False).text)
             if isInThisRole(auditorresponse, userinfo['user_name']):
@@ -107,7 +107,7 @@ def profile():
                 }
 
             # get all developers
-            devurl = 'http://api.local.pcfdev.io' + entity['developers_url']
+            devurl = baseAPIurl + entity['developers_url']
             devresponse = json.loads(requests.get(
                 devurl, headers=headers, verify=False).text)
             if isInThisRole(devresponse, userinfo['user_name']):
@@ -117,7 +117,7 @@ def profile():
                 }
 
             # get all managers
-            managerurl = 'http://api.local.pcfdev.io' + entity['managers_url']
+            managerurl = baseAPIurl + entity['managers_url']
             managerresponse = json.loads(requests.get(
                 managerurl, headers=headers, verify=False).text)
             if isInThisRole(managerresponse, userinfo['user_name']):
