@@ -11,6 +11,8 @@ client_id = "triallogin"
 client_secret = "trial"
 authorization_base_url = 'https://uaa.local.pcfdev.io/oauth/authorize/'
 token_url = 'https://uaa.local.pcfdev.io/oauth/token'
+baseAPIurl = 'https://api.local.pcfdev.io'
+baseUAAurl = 'https://uaa.local.pcfdev.io'
 
 
 @app.route('/')
@@ -73,27 +75,27 @@ def profile():
     profileInfo = {'access_token': session['oauth_token']['access_token']}
 
     # get user summary
-    userinfourl = 'https://uaa.local.pcfdev.io/userinfo'
+    userinfourl = '{}/userinfo'.format(baseUAAurl)
     userinfo = json.loads(requests.get(
         userinfourl, headers=headers, verify=False).text)
     session['userinfo'] = userinfo
     profileInfo['userinfo'] = json.dumps(session['userinfo'])
 
     # get user roles by orgs and space
-    usersummaryurl = 'https://api.local.pcfdev.io/v2/users/{' \
-                     '}/summary'.format(userinfo['user_id'])
+    usersummaryurl = '{0}/v2/users/{1}/summary'.format(
+        baseAPIurl, userinfo['user_id'])
     usersummary = json.loads(requests.get(
         usersummaryurl, headers=headers, verify=False).text)
     profileInfo['spaceWiseUserRoles'] = json.dumps(getSpaceWiseUserRoles(
         usersummary['entity']))
 
     # get user apps from all spaces
-    url = 'http://api.local.pcfdev.io/v2/apps'
+    url = '{}/v2/apps'.format(baseAPIurl)
     response = requests.get(url, headers=headers, verify=False)
     appsData = json.loads(response.text)
     appsUrls = {}
     for resource in appsData['resources']:
-        routes_url = 'http://api.local.pcfdev.io' + \
+        routes_url = baseAPIurl + \
             resource['entity']['routes_url']
         routes_url_response = json.loads(requests.get(
             routes_url, headers=headers, verify=False).text)
