@@ -1,0 +1,16 @@
+#app-list {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  font-family: 'Fira Sans', sans-serif;
+  font-weight: 300;
+  font-size: 1.2rem;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  list-style-type:square;
+  margin: 0; padding: 0;
+}
+
+#app-list li{
+    margin-top: 10px;
+}

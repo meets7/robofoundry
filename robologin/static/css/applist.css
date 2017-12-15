@@ -1,0 +1,42 @@
+#app-list {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  font-family: 'Fira Sans', sans-serif;
+  font-weight: 300;
+  font-size: 1.2rem;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  list-style-type:square;
+}
+
+.list {
+  margin: 20px 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+ul li {
+  list-style-type: none;
+  text-decoration: none;
+}
+
+#app-list > li{
+  font-size: 20px;
+}
+svg.list--tick_ok {
+  overflow: visible !important;
+}
+
+
+.link-button{
+  text-decoration: none;
+}

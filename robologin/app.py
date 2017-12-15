@@ -3,7 +3,7 @@ import os
 
 import requests
 from flask import Flask, render_template, session, request, url_for, \
-    redirect, json
+    redirect, json, jsonify
 from requests_oauthlib import OAuth2Session
 
 app = Flask(__name__)
@@ -17,7 +17,7 @@ baseUAAurl = 'https://uaa.local.pcfdev.io'
 
 @app.route('/')
 def index():
-    return render_template('index.html', sign='Sign In')
+    return render_template('index.html')
 
 
 @app.errorhandler(404)
@@ -38,6 +38,8 @@ def login():
 
     # State is used to prevent CSRF, keep this for later.
     session['oauth_state'] = state
+    session['logged_in'] = True
+    session['uaa'] = baseUAAurl
     return redirect(authorization_url)
 
 
@@ -137,6 +139,8 @@ def profile():
     response = requests.get(url, headers=headers, verify=False)
     appsData = json.loads(response.text)
     appsUrls = {}
+
+    # user accessible app url
     for resource in appsData['resources']:
         routes_url = baseAPIurl + \
             resource['entity']['routes_url']
@@ -180,9 +184,40 @@ def getSpaceWiseUserRoles(entity):
     return spaceWiseUserRoles
 
 
+@app.route('/manage')
+def manage():
+    if not session.get('oauth_token'):
+        return redirect(url_for('login'))
+    spaceWiseUserRoles = session['spaceWiseUserRoles']
+    managerSpaces = []
+    for space in spaceWiseUserRoles:
+        if spaceWiseUserRoles[space]['role'] == 'manager':
+            managerSpaces.append((spaceWiseUserRoles[space]['name'], space))
+    return render_template('managespace.html', spaces=managerSpaces)
+
+
+@app.route('/getusers')
+def getUsers():
+    guid = request.args.get('guid')
+    orgusersurl = baseAPIurl + '/v2/spaces/{0}/user_roles'.format(guid)
+    tokenString = "bearer {0}".format(session['oauth_token']['access_token'])
+    headers = {"Authorization": tokenString}
+    orgusersresponse = json.loads(requests.get(
+        orgusersurl, headers=headers, verify=False).text)
+    users = []
+    for user in orgusersresponse['resources']:
+        newuser = {
+            'guid': user['metadata']['guid'],
+            'name': user['entity']['username'],
+            'roles': user['entity']['space_roles'],
+        }
+        users.append(newuser)
+    return jsonify(users)
+
+
 @app.route('/logout')
 def logout():
-    session.pop('signedin')
+    session['logged_in'] = False
     return redirect(url_for('index'))
 
 

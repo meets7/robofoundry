@@ -1,32 +1,88 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Profile</title>
-    <link rel="icon" href="{{ url_for('static',filename='img/favicon.png') }}">
-    <link href="{{ url_for('static',filename='css/profile.css') }}"
-          rel="stylesheet">
+  <title>Profile</title>
+  <link rel="icon" href="{{ url_for('static',filename='img/favicon.png') }}">
+  <link href="{{ url_for('static',filename='css/profile.css') }}"
+  rel="stylesheet">
+  <link href="{{ url_for('static',filename='css/applist.css') }}"
+  rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<ul>
+  <!-- Static navbar -->
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="{{url_for('index')}}">RoboFoundry</a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="profile">View apps</a></li>
+          <li><a href="manage">Manage Space</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li>
+                {% if not session.logged_in %}
+                  <a href="{{url_for('login')}}">Sign In</a></li>
+                {% else %}
+                  <a href="{{ url_for('logout') }}">Sign Out</a>
+                {% endif %}
+              </li>
+
+
+              <li role="separator" class="divider"></li>
+              <li class="dropdown-header">Settings</li>
+              <li><a target='_blank' href="{{ session.uaa }}">My Account</a></li>
+            </ul>
+          </li>
+            
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div><!--/.container-fluid -->
+  </nav>
+  
+  <!-- Apps list -->
+
+  
+  <ul id="app-list">
     {% for appname in data['apps'] %}
-        <li>
-            <form method="post"
-                  target="_blank"
-                  action="http://localhost:8080/RobocodeV1/app/welcome"
-                  class="inline">
-                <input type="hidden" name="access_token"
-                       value="{{ data['access_token'] }}">
-                <input type="hidden" name="user_roles"
-                       value="{{  data['spaceWiseUserRoles'] }}">
-                <input type="hidden" name="user_info"
-                       value="{{ data['userinfo'] }}">
-                <button name="submit_param" value="submit_value"
-                        class="link-button">
-                    {{ appname }}
-                </button>
-            </form>
-        </li>
-    {% endfor %}
+    <li class="list">
+      <form method="post"
+      target="_blank"
+      action="http://localhost:8080/RobocodeV1/app/welcome"
+      class="inline">
+      <input type="hidden" name="access_token"
+      value="{{ data['access_token'] }}">
+      <input type="hidden" name="user_roles"
+      value="{{  data['spaceWiseUserRoles'] }}">
+      <input type="hidden" name="user_info"
+      value="{{ data['userinfo'] }}">
+      <button name="submit_param" value="submit_value"
+      class="link-button">
+      {{ appname }}
+    </button>
+  </form>
+</li>
+{% endfor %}
 </ul>
-</body>
-</html>
+
+    <!-- Bootstrap core JavaScript
+      ================================================== -->
+      <!-- Placed at the end of the document so the pages load faster -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
+      <!-- <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script> -->
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+      <script type="text/javascript" src="{{url_for('static',filename='js/applist.js')}}"></script>
+      <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+      <!-- <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script> -->
+    </body>
+    </html>
