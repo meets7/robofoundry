@@ -91,8 +91,10 @@ public class EditServlet extends HttpServlet {
 			Connection conn = DriverManager.getConnection(url, user, password);
 
 			Statement statement = (Statement) conn.createStatement();
+/*			String newstmt = "SELECT Distinct RobotCode,id from robot where robotID='" + robotid + "' and packageID='"
+				+ packageid + "' and userID = '" + userid + "'";*/
 			String newstmt = "SELECT Distinct RobotCode,id from robot where robotID='" + robotid + "' and packageID='"
-					+ packageid + "' and userID = '" + userid + "'";
+						+ packageid + "'"; 
 			resultSet = statement.executeQuery(newstmt);
 
 			String Robocode = "";

@@ -94,6 +94,16 @@
 		<servlet-name>View</servlet-name>
 		<url-pattern>/app/viewservlet</url-pattern>
 	</servlet-mapping>
+	
+<!--	<servlet>
+		<servlet-name>viewsharedrobots</servlet-name>
+		<servlet-class>servlets.ViewSharedRobots</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>viewsharedrobots</servlet-name>
+		<url-pattern>/app/ViewSharedRobots</url-pattern>
+	</servlet-mapping>
+-->
 	<servlet>
 		<servlet-name>save</servlet-name>
 		<servlet-class>servlets.SaveRobotServlet</servlet-class>
@@ -345,5 +355,13 @@
 	<servlet-mapping>
 		<servlet-name>welcome</servlet-name>
 		<url-pattern></url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>sharerobot</servlet-name>
+		<servlet-class>servlets.ShareRobotServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>sharerobot</servlet-name>
+		<url-pattern>/app/sharerobot</url-pattern>
 	</servlet-mapping>
 </web-app>
