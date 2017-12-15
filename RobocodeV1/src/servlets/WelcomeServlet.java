@@ -54,14 +54,13 @@ public class WelcomeServlet extends HttpServlet {
 		cforgusers = new ObjectMapper().readValue(org_users, HashMap.class);
 		session.setAttribute("cfaccess_token", cfaccess_token);
 		session.setAttribute("cfuserinfo", cfuserinfo);
-		session.setAttribute("cfroles", cfrole);
+		session.setAttribute("userrole", cfrole);
 		session.setAttribute("cfspace_guid", spaceguid);
 		session.setAttribute("org_id", org_id);
 		session.setAttribute("cforgusers", cforgusers);
-
-		// String userDTO = session.getAttribute("userx").toString();
-		// if (request.getParameter("domain_name") != null) {
-		// session.setAttribute("robotList", robot_DTO);
+		
+		String username = cfuserinfo.get("user_name").toString(); 
+        session.setAttribute("username", username);
 
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("welcome.jsp");
 		requestDispatcher.forward(request, response);

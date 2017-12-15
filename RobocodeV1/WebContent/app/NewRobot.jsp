@@ -36,8 +36,11 @@ ResultSet resultset = null;
 
 <body>
 
-<%String role = "coach";
-	if(role =="coach") {%>
+<%
+String roles = (String)session.getAttribute("userrole");
+String user = (String)session.getAttribute("username");
+if(roles.equals("manager"))
+{%>
 	
 	<%@include file="../includes/header.jsp"%>
 	<body>
@@ -66,7 +69,7 @@ ResultSet resultset = null;
 									"root");
 
 									Statement statement = connection.createStatement();
-									String selectString="SELECT userID, packageID, robotID from robot";
+									String selectString="SELECT userID, packageID, robotID from robot where userID ='"+user+"'";
 									resultset = statement
 									.executeQuery(selectString);
 									
