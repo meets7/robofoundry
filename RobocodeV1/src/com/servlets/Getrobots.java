@@ -29,10 +29,7 @@ public class Getrobots extends HttpServlet {
 			
 			String domainName = req.getParameter("domain_name");
 			session.setAttribute("packageId", domainName);
-<<<<<<< Updated upstream
-=======
 			System.out.println("tenant name is C" + domainName);
->>>>>>> Stashed changes
 			HashMap<String, List<String>> domainMap = (HashMap<String, List<String>>)session.getAttribute("DomainMap");
 			List<String> setOfvalues = domainMap.get(domainName);
 			out.println("<option>Select Robot</option>");
