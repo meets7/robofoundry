@@ -14,3 +14,7 @@
 #app-list li{
     margin-top: 10px;
 }
+
+#app-list table{
+  text-align: center;
+}

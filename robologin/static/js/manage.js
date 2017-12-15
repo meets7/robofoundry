@@ -9,7 +9,7 @@ var getusers = function() {
             
             $.each(responseData,function(i,item) {
                 
-            trHTML += '<tr><td>' + item.guid + '</td><td>' + item.name + '</td>';
+            trHTML += '<tr><td>' + item.name + '</td><td>' + item.guid + '</td>';
             $.each(item.roles, function(i,role){
                 trHTML += '<td>' + role + '</td>';    
             })
@@ -17,6 +17,7 @@ var getusers = function() {
             });
                     
             $('#' + guid + '-roles').append(trHTML);
+            $('#' + guid + '-roles table').attr('bgcolor',"#00FF00");
             
             return true;
         }});
