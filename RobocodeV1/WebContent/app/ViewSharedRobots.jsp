@@ -86,6 +86,7 @@
 		function getDomains() {
 
 			var x = document.getElementById("domain_name").value;
+			x = '<%=user%>';
 			$.ajax({
 				url : "GetrobotDomain",
 				data : "tenant_name=" + x + "",

@@ -35,6 +35,12 @@ ResultSet resultset = null;
 </head>
 
 <body>
+<%
+String roles = (String)session.getAttribute("userrole");
+out.println(roles);
+String user = (String)session.getAttribute("username");
+if(roles.equals("manager")){%>
+
 <%@include file="../includes/header.jsp" %>
 	<br>
 	<br>
@@ -65,7 +71,7 @@ ResultSet resultset = null;
 											"root");
 
 									Statement statement = connection.createStatement();
-									String user = (String)session.getAttribute("username");
+									
 									String selectString="SELECT userID, packageID, robotID from robot where userID ='"+user+"'";
 									resultset = statement
 											.executeQuery(selectString);
@@ -225,5 +231,9 @@ ResultSet resultset = null;
 	<div id="statusmessage"></div>
 	
 	<script type="text/javascript" src="../js/sharerobot.js"></script>
+	
+	<%}else{ 
+		out.println("Not authorized to edit a robot");
+	}%>
 </body>
 </html>

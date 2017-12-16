@@ -8,6 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <%
 	ResultSet resultset = null;
+	ResultSet sharedset = null;
 %>
 <title>New Battle</title>
 <%@include file="../includes/header.jsp"%>
@@ -144,6 +145,12 @@ function getValueFromApplet(){
 					resultset = statement
 							.executeQuery(selectString);
 					
+					Statement newstatement = connection.createStatement();
+					String selectShared="SELECT u.userID,r.packageID,r.robotID from robot as r inner join relationship as u on r.robotID = u.robotid where u.userid ='"+user+"'";
+					sharedset = newstatement
+							.executeQuery(selectShared);   
+					
+					
 							%>
 <script type="text/javascript">
 		function getDomains() {
@@ -203,6 +210,38 @@ function getValueFromApplet(){
 
 					}
 				}
+			
+			while (sharedset.next()) {
+				list_of_tenants.add(sharedset.getString(1));
+				list_of_domains.add(sharedset.getString(2));
+				list_of_robots.add(sharedset.getString(3));
+				String value1 = sharedset.getString(1);
+				String value2 = sharedset.getString(2);
+				String value3 = sharedset.getString(3);
+				List<String> value = map.get(value1);
+				if (value == null) {
+					map.put(value1, new ArrayList<String>());
+					map.get(value1).add(value2);
+				} else {
+					value = map.get(value1);
+					if (!value.contains(value2)) {
+						map.get(value1).add(value2);
+					}
+
+				}
+				value = domain_robot_map.get(value2);
+				if (value == null) {
+					domain_robot_map.put(value2, new ArrayList<String>());
+					domain_robot_map.get(value2).add(value3);
+				} else {
+					value = domain_robot_map.get(value2);
+					if (!value.contains(value3)) {
+						domain_robot_map.get(value2).add(value3);
+					}
+
+				}
+			}
+		
 			
 			Iterator iterator = list_of_tenants.iterator();
 			while (iterator.hasNext()) {

@@ -37,7 +37,7 @@ public class GetrobotDomain extends HttpServlet{
 			System.out.println("tenant name is A " + tenantName);
 			@SuppressWarnings("unchecked")
 			HashMap<String, List<String>> tenantMap = (HashMap<String, List<String>>)session.getAttribute("tenantMap");
-			System.out.println(tenantMap);
+			System.out.println("tenanant map is"+ tenantMap);
 			List<String> setOfvalues = tenantMap.get(tenantName);
 			out.println("<option>Select Package</option>");
 			for(int i =0 ; i < setOfvalues.size(); i++)

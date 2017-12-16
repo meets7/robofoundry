@@ -62,9 +62,11 @@ public class CreatePackageServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		HttpSession session = request.getSession();
+		String username = (String) session.getAttribute("username");
+		System.out.println(username);
 		String packagename = "";
-		String userid = "1";
+		String userid = username;
 		if (request.getParameter("packagename") != null) {
 			packagename =request.getParameter("packagename");
 		}

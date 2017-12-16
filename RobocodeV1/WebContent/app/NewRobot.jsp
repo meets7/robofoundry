@@ -2,6 +2,7 @@
 pageEncoding="UTF-8"%>
 <%@page import="java.sql.*"%>
 <%@page import="java.util.*"%>
+
 <%
 ResultSet resultset = null;
 %>
@@ -39,9 +40,9 @@ ResultSet resultset = null;
 <%
 String roles = (String)session.getAttribute("userrole");
 String user = (String)session.getAttribute("username");
-if(roles.equals("manager"))
+
+if(roles.equals("manager")||roles.equals("developer"))
 {%>
-	
 	<%@include file="../includes/header.jsp"%>
 	<body>
 		<div class="container">
@@ -61,24 +62,28 @@ if(roles.equals("manager"))
 									Set<String> list_of_domains = new HashSet<String>();
 									Set<String> list_of_robots = new HashSet<String>();
 									HashMap<String, List<String>> map = new HashMap<String, List<String>>();
+									HashMap<String, List<String>> packagemap = new HashMap<String, List<String>>();
 									HashMap<String, List<String>> domain_robot_map = new HashMap<String, List<String>>();							
 									try {
 									String connectionURL = "jdbc:mysql://localhost:3306/robocode";
 									Class.forName("com.mysql.jdbc.Driver").newInstance();
 									Connection connection = DriverManager.getConnection(connectionURL, "root",
 									"root");
-
 									Statement statement = connection.createStatement();
 									String selectString="SELECT userID, packageID, robotID from robot where userID ='"+user+"'";
 									resultset = statement
 									.executeQuery(selectString);
 									
+									Statement newstatement = connection.createStatement();
+									String newString ="SELECT packagename from userpackages where userid='"+user+"'";
+									ResultSet packageSet = newstatement
+									.executeQuery(newString);
+									
 									%>
 									<script type="text/javascript">
 										function getDomains() {
-
 											var x = document.getElementById("domain_name").value;
-
+											x = '<%=user%>';
 											$.ajax({
 												url : "GetrobotDomain",
 												data : "tenant_name=" + x + "",
@@ -99,51 +104,18 @@ if(roles.equals("manager"))
 									<label>Select User</label> 
 									<select name="domain_name" id="domain_name" class="form-control" onchange="getDomains()">
 									<option value="" disabled selected>Select User</option>
-
-									<%
-									while (resultset.next()) {
-									list_of_tenants.add(resultset.getString(1));
-									list_of_domains.add(resultset.getString(2));
-									list_of_robots.add(resultset.getString(3));
-									String value1 = resultset.getString(1);
-									String value2 = resultset.getString(2);
-									String value3 = resultset.getString(3);
-									List<String> value = map.get(value1);
-										if (value == null) {
-										map.put(value1, new ArrayList<String>());
-											map.get(value1).add(value2);
-										} else {
-										value = map.get(value1);
-										if (!value.contains(value2)) {
-										map.get(value1).add(value2);
-									}
-
+									<option value="<%=user%>"><%=user%></option>
+								<%
+					
+								packagemap.put(user,new ArrayList<String>());
+								while(packageSet.next())
+								{
+									String pack = packageSet.getString(1);
+									packagemap.get(user).add(pack);
 								}
-								value = domain_robot_map.get(value2);
-								if (value == null) {
-								domain_robot_map.put(value2, new ArrayList<String>());
-									domain_robot_map.get(value2).add(value3);
-								} else {
-								value = domain_robot_map.get(value2);
-								if (!value.contains(value3)) {
-								domain_robot_map.get(value2).add(value3);
-							}
-
-						}
-					}
-
-					Iterator iterator = list_of_tenants.iterator();
-					while (iterator.hasNext()) {
-					String key = (String) iterator.next();	
-									//System.out.println(key);
-									%>
-
-									<option value="<%=key%>"><%=key%></option>
-									<%
-					}
-										session.setAttribute("tenantMap", map);
-										session.setAttribute("DomainMap", domain_robot_map);
-										session.setAttribute("userx", "User");
+								session.setAttribute("tenantMap", packagemap);
+								session.setAttribute("DomainMap", domain_robot_map);
+								session.setAttribute("userx", "User");
 									%>
 									</select>
 	<script type="text/javascript">
@@ -165,9 +137,9 @@ if(roles.equals("manager"))
 		}	
 	</script>
 	<label>Select Package</label> 
-	<select name="package" id="package" class="form-control" onchange="getRobots()">
+	/*<select name="package" id="package" class="form-control" onchange="getRobots()">
 		<option value="" disabled selected>Select Package</option>
-	</select> <br />
+	</select>*/ <br />  
 <%} catch (Exception e) {
 out.println("wrong entry" + e);
 }
